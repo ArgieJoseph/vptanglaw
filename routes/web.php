@@ -64,6 +64,7 @@ Route::GET('admin-password/reset/{token}','Admin\ResetPasswordController@showRes
 
 // VP ROUTES
 Route::get('/vp_enrollment', 'VPPagesController@vp_enrollment')->name('vp_enrol');
+Route::get('/vp_enrollment_pdf', 'VPPagesController@vp_enrollment_pdf')->name('vp_enrol_pdf');
 Route::get('/vp_graduates', 'VPPagesController@vp_graduates')->name('vp_grad');
 Route::get('/vp_scholarship', 'VPPagesController@vp_scholarship')->name('vp_scho');
 Route::get('/vp_licensure', 'VPPagesController@vp_licensure')->name('vp_lin');
