@@ -44,7 +44,7 @@ class VPPagesController extends Controller
     public function vp_enrollment()
     {
        // return view('pages.vp_enrollment');
-
+//FOR TABLE START
     $t_loc = DB::table('enrollments')
     ->join('t_universities  as tu', 'enrollments.tu_id', '=', 'tu.id')
     ->join('universities  as u', 'tu.u_id', '=', 'u.id')
@@ -57,7 +57,8 @@ class VPPagesController extends Controller
     $t_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_PER_CAMPUS_EDUC(F_ENROLLMENT_COMPUTE_STUDENT(@TOTALSTUD))');
 
     $t_educ =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_EDUC(F_ENROLLMENT_COMPUTE_STUDENT(@TOTALSTUD))');
-
+// END FOR TABLE
+// FOR CHART START
     $result = DB::table('enrollments')->join('t_universities  as tu', 'enrollments.tu_id', '=', 'tu.id')
     ->join('universities  as u', 'tu.u_id', '=', 'u.id')
     ->select( DB::raw('UCASE(u.address) as Address, SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale)+SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale) as total'))
@@ -98,6 +99,7 @@ class VPPagesController extends Controller
     ->groupBy('Address','tu.major')
     ->orderBy('Address')
     ->get();
+//END FOR CHART
 
 
     return view('pages.vp_enrollment',compact('t_univ','t_loc','t_total','result','result_univ','result_major','t_educ' ),array('user' => Auth ::user()));
