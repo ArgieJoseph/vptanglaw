@@ -27,10 +27,9 @@
              <td>
                <button value="{{$a->id}}" class="btn btn-primary btn-xs btn-edit" ><i class="fa fa-pencil-square-o"></i>
                 </button>
-              </td>
+            </td>
            
           </tr>
-
          @endforeach
        </tbody>
 
