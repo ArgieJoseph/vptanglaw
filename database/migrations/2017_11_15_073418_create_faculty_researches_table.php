@@ -16,7 +16,9 @@ class CreateFacultyResearchesTable extends Migration
         Schema::create('faculty_researches', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('research')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('research')->default(0);
             $table->timestamps();
         });
     }

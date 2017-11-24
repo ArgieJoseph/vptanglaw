@@ -16,15 +16,17 @@ class CreateAdminAgegroupsTable extends Migration
         Schema::create('admin_agegroups', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('25-below')->nullable();
-            $table->integer('26-30')->nullable();
-            $table->integer('31-35')->nullable();
-            $table->integer('36-40')->nullable();
-            $table->integer('41-45')->nullable();
-            $table->integer('46-50')->nullable();
-            $table->integer('51-55')->nullable();
-            $table->integer('56-60')->nullable();
-            $table->integer('61-above')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('25-below')->default(0);
+            $table->integer('26-30')->default(0);
+            $table->integer('31-35')->default(0);
+            $table->integer('36-40')->default(0);
+            $table->integer('41-45')->default(0);
+            $table->integer('46-50')->default(0);
+            $table->integer('51-55')->default(0);
+            $table->integer('56-60')->default(0);
+            $table->integer('61-above')->default(0);
             $table->timestamps();
         });
     }

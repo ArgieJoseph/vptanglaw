@@ -16,9 +16,10 @@ class CreateFacilityDistancesTable extends Migration
         Schema::create('facility_distances', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->float('distance')->nullable();
+            $table->float('distance')->default(0);
             $table->timestamps();
         });
+            DB::statement('ALTER TABLE `facility_distances` ADD `year` YEAR NOT NULL');
     }
 
     /**

@@ -16,11 +16,13 @@ class CreateAdminEligibilitynamesTable extends Migration
         Schema::create('admin_eligibilitynames', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('cs_pro')->nullable();
-            $table->integer('cs_subpro')->nullable();
-            $table->integer('testimonial')->nullable();
-            $table->integer('tesda')->nullable();
-            $table->integer('others')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('cs_pro')->default(0);
+            $table->integer('cs_subpro')->default(0);
+            $table->integer('testimonial')->default(0);
+            $table->integer('tesda')->default(0);
+            $table->integer('others')->default(0);
             $table->timestamps();
         });
     }

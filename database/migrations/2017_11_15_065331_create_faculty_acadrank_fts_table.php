@@ -16,10 +16,12 @@ class CreateFacultyAcadrankFtsTable extends Migration
         Schema::create('faculty_acadrank_fts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('instructor')->nullable();
-            $table->integer('asst_prof')->nullable();
-            $table->integer('asso_prof')->nullable();
-            $table->integer('professor')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('instructor')->default(0);
+            $table->integer('asst_prof')->default(0);
+            $table->integer('asso_prof')->default(0);
+            $table->integer('professor')->default(0);
             $table->timestamps();
         });
     }

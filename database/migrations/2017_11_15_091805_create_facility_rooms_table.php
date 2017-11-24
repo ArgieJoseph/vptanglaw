@@ -16,12 +16,13 @@ class CreateFacilityRoomsTable extends Migration
         Schema::create('facility_rooms', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('classroom')->nullable();
-            $table->integer('administrative')->nullable();
-            $table->integer('academic')->nullable();
-            $table->integer('faculty_lounge')->nullable();
+            $table->integer('classroom')->default(0);
+            $table->integer('administrative')->default(0);
+            $table->integer('academic')->default(0);
+            $table->integer('faculty_lounge')->default(0);
             $table->timestamps();
         });
+        DB::statement('ALTER TABLE `facility_rooms` ADD `year` YEAR NOT NULL');
     }
 
     /**

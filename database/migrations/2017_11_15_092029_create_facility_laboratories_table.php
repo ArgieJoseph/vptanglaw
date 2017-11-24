@@ -18,9 +18,11 @@ class CreateFacilityLaboratoriesTable extends Migration
             $table->integer('u_id');
             $table->integer('lab_name');
             $table->integer('room')->nullable();
-            $table->string('capacity')->nullable();
+            $table->string('capacity')->default(0);
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE `facility_laboratories` ADD `year` YEAR NOT NULL');
     }
 
     /**

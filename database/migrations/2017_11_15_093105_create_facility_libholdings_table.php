@@ -16,12 +16,13 @@ class CreateFacilityLibholdingsTable extends Migration
         Schema::create('facility_libholdings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('textbook')->nullable();
-            $table->integer('periodical')->nullable();
-            $table->integer('cd')->nullable();
-            $table->string('others')->nullable();
+            $table->integer('textbook')->default(0);
+            $table->integer('periodical')->default(0);
+            $table->integer('cd')->default(0);
+            $table->string('others')->default(0);
             $table->timestamps();
         });
+          DB::statement('ALTER TABLE `facility_libholdings` ADD `year` YEAR NOT NULL');
     }
 
     /**

@@ -19,6 +19,7 @@ class CreateFacilityLandareasTable extends Migration
             $table->float('land_area')->nullable();
             $table->timestamps();
         });
+         DB::statement('ALTER TABLE `facility_landareas` ADD `year` YEAR NOT NULL');
     }
 
     /**

@@ -16,10 +16,12 @@ class CreateFacultyStatusesTable extends Migration
         Schema::create('faculty_statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('ft_male')->nullable();
-            $table->integer('ft_female')->nullable();
-            $table->integer('pt_male')->nullable();
-            $table->integer('pt_female')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('ft_male')->default(0);
+            $table->integer('ft_female')->default(0);
+            $table->integer('pt_male')->default(0);
+            $table->integer('pt_female')->default(0);
             $table->timestamps();
         });
     }

@@ -16,17 +16,19 @@ class CreateFacultyAgegroupsTable extends Migration
         Schema::create('faculty_agegroups', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('25-below')->nullable();
-            $table->integer('26-31')->nullable();
-            $table->integer('32-37')->nullable();
-            $table->integer('38-43')->nullable();
-            $table->integer('44-49')->nullable();
-            $table->integer('50-55')->nullable();
-            $table->integer('56-61')->nullable();
-            $table->integer('62-67')->nullable();
-            $table->integer('68-73')->nullable();
-            $table->integer('74-79')->nullable();
-            $table->integer('80-above')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('25-below')->default(0);
+            $table->integer('26-31')->default(0);
+            $table->integer('32-37')->default(0);
+            $table->integer('38-43')->default(0);
+            $table->integer('44-49')->default(0);
+            $table->integer('50-55')->default(0);
+            $table->integer('56-61')->default(0);
+            $table->integer('62-67')->default(0);
+            $table->integer('68-73')->default(0);
+            $table->integer('74-79')->default(0);
+            $table->integer('80-above')->default(0);
             $table->timestamps();
         });
     }

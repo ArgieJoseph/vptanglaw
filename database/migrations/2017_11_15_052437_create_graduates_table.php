@@ -15,13 +15,14 @@ class CreateGraduatesTable extends Migration
     {
         Schema::create('graduates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tu_id');
-            $table->integer('my_male')->nullable();
-            $table->integer('my_female')->nullable();
-            $table->integer('ye_male')->nullable();
-            $table->integer('ye_female')->nullable();
+            $table->integer('u_id');
+            $table->integer('my_male')->default(0);
+            $table->integer('my_female')->default(0);
+            $table->integer('ye_male')->default(0);
+            $table->integer('ye_female')->default(0);
             $table->timestamps();
         });
+        DB::statement('ALTER TABLE `graduates` ADD `year` YEAR NOT NULL');
     }
 
     /**

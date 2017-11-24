@@ -148,17 +148,23 @@ Route::post('/deleteCamp','AdminCampusController@delete');
 //IPO
 
 // Route::get('/ipo_main','IPOMainController@index')->name('ipo_main');
-Route::get('/ipo_enrollment','IPOMainController@enrollment')->name('ipo_enroll');
-Route::get('/ipo_faculty','IPOMainController@faculty')->name('ipo_faculty');
-Route::get('/ipo_facility','IPOMainController@facility')->name('ipo_facility');
-Route::get('/ipo_admin','IPOMainController@admin')->name('ipo_admin');
+Route::get('/ipo_enrollment','IPOEnrollmentController@enrollment')->name('ipo_enroll');
+Route::get('/ipo_faculty','IPOFacultyController@faculty')->name('ipo_faculty');
+Route::get('/ipo_facility','IPOFacilityController@facility')->name('ipo_facility');
+Route::get('/ipo_admin','IPOAdminController@admin')->name('ipo_admin');
 // Route::get('/ipo_campus','IPOMainController@index2')->name('ipo_camp');
 ///for enrollment
-Route::Get('/exceldes','IPOMainController@export');
-Route::post('import-csv-excel',array('as'=>'import-csv-excel','uses'=>'IPOMainController@importHE'));
+Route::Get('/exceldes','IPOEnrollmentController@export');
+Route::post('import-csv-excel',array('as'=>'import-csv-excel','uses'=>'IPOEnrollmentController@importHE'));
 //for faculty
-Route::Get('/exceldes-faculty','IPOMainController@exportfaculty');
-Route::post('import-csv-excel-faculty',array('as'=>'import-csv-excel-faculty','uses'=>'IPOMainController@importfaculty'));
+Route::Get('/exceldes-faculty','IPOFacultyController@exportfaculty');
+Route::post('import-csv-excel-faculty',array('as'=>'import-csv-excel-faculty','uses'=>'IPOFacultyController@importfaculty'));
+
+Route::Get('/exceldes-admin','IPOAdminController@exportAdmin');
+Route::post('import-csv-excel-admin',array('as'=>'import-csv-excel-admin','uses'=>'IPOAdminController@importAdmin'));
+
+Route::Get('/exceldes-facility','IPOFacilityController@exportFacility');
+Route::post('import-csv-excel-facility',array('as'=>'import-csv-excel-facility','uses'=>'IPOAdminController@importAdmin'));
 //Route::Get('/exceldes','IPOMainController@export');
 //Route::Post('/importHE','IPOMainController@import');
 

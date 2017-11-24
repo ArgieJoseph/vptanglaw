@@ -43,9 +43,9 @@
                     <div class="col-md-9" style="padding-left: 240px;">
 
                            {!!Form::open(['url'=>'/exceldes-faculty','method'=>'Get','id'=>'excel'])!!}
-                     
+       
+              
                            {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
-
 
                                   <div class="form-group text-center">
                         <label class="col-md-12" style="padding-top: 30px;"><u> {!! Form::submit('Excel Format',['class'=>'btn btn-success pull-right']) !!}
@@ -57,6 +57,8 @@
                       <br>
                       <hr>
                      {!! Form::open(array('route' => 'import-csv-excel-faculty','method'=>'POST','files'=>'true')) !!}
+                                   
+                           {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
            
                       <br>
@@ -103,36 +105,36 @@
                       @section('script')
                      <script type="text/javascript">
                       
-             $(document).ready(function(){
+          //    $(document).ready(function(){
 
-                      $.ajaxSetup({
-                      headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
+          //             $.ajaxSetup({
+          //             headers: {
+          //                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          //                       }
 
-                      });
-                    });
+          //             });
+          //           });
 
-          $('#addSySem').on('submit',function(e){
-                      e.preventDefault();
-                     var u_id = $('#id').val();
+          // $('#addSySem').on('submit',function(e){
+          //             e.preventDefault();
+          //            var u_id = $('#id').val();
                     
 
-                      var url =$(this).attr('action');
-                      var post = $(this).attr('method');
-                      //var data = $(this).serialize();
-                      //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
-                        $.ajax({
-                        type : post,
-                        url : url,
-                        data : {'u_id':u_id},
+          //             var url =$(this).attr('action');
+          //             var post = $(this).attr('method');
+          //             //var data = $(this).serialize();
+          //             //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
+          //               $.ajax({
+          //               type : post,
+          //               url : url,
+          //               data : {'u_id':u_id},
 
-                              success:function(data){
-                                alert(data.msg);
+          //                     success:function(data){
+          //                       alert(data.msg);
 
-                              }  
-                      }) 
-                    })
+          //                     }  
+          //             }) 
+          //           })
 
     // $('#excel').on('submit',function(e){
     //           e.preventDefault();

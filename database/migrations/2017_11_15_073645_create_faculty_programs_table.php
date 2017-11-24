@@ -15,8 +15,11 @@ class CreateFacultyProgramsTable extends Migration
     {
         Schema::create('faculty_programs', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('u_id');
+            $table->integer('sem_id');
+            $table->integer('sy_id');
             $table->string('classification');
-            $table->integer('beneficiary')->nullable();
+            $table->integer('beneficiary')->default(0);
             $table->timestamps();
         });
     }

@@ -17,9 +17,11 @@ class CreateFacilitySportsTable extends Migration
             $table->increments('id');
             $table->integer('u_id');
             $table->string('sports_facility');
-            $table->float('area')->nullable();
+            $table->float('area')->default(0);
             $table->timestamps();
         });
+
+          DB::statement('ALTER TABLE `facility_sports` ADD `year` YEAR NOT NULL');
     }
 
     /**
