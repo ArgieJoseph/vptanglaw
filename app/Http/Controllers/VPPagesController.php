@@ -45,8 +45,8 @@ class VPPagesController extends Controller
     {
        // return view('pages.vp_enrollment');
 //FOR TABLE START
-    $t_loc = DB::table('enrollments')
-    ->join('t_universities  as tu', 'enrollments.tu_id', '=', 'tu.id')
+    $t_loc = DB::table('t_enrollments')
+    ->join('t_universities  as tu', 't_enrollments.tu_id', '=', 'tu.id')
     ->join('universities  as u', 'tu.u_id', '=', 'u.id')
     ->select('tu.education', DB::raw('UCASE(u.address) as Address'))
     ->groupBy('Address','tu.education')
@@ -57,9 +57,11 @@ class VPPagesController extends Controller
     $t_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_PER_CAMPUS_EDUC(F_ENROLLMENT_COMPUTE_STUDENT(@TOTALSTUD))');
 
     $t_educ =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_EDUC(F_ENROLLMENT_COMPUTE_STUDENT(@TOTALSTUD))');
+    $t_grand_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_GRAND_TOTAL(F_ENROLLMENT_COMPUTE_STUDENT(@TOTALSTUD))');
+
 // END FOR TABLE
 // FOR CHART START
-    $result = DB::table('enrollments')->join('t_universities  as tu', 'enrollments.tu_id', '=', 'tu.id')
+    $result = DB::table('t_enrollments')->join('t_universities  as tu', 't_enrollments.tu_id', '=', 'tu.id')
     ->join('universities  as u', 'tu.u_id', '=', 'u.id')
     ->select( DB::raw('UCASE(u.address) as Address, SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale)+SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale) as total'))
     ->groupBy('Address')
@@ -68,8 +70,8 @@ class VPPagesController extends Controller
         
 
 
-    $result_univ = DB::table('enrollments')
-    ->join('t_universities  as tu', 'enrollments.tu_id', '=', 'tu.id')
+    $result_univ = DB::table('t_enrollments')
+    ->join('t_universities  as tu', 't_enrollments.tu_id', '=', 'tu.id')
     ->join('universities  as u', 'tu.u_id', '=', 'u.id')
     ->select( DB::raw('UCASE(u.address) as Address1'),'tu.course',
               DB::raw('SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale) as Male,
@@ -83,8 +85,8 @@ class VPPagesController extends Controller
 
 
 
-    $result_major = DB::table('enrollments')
-    ->join('t_universities  as tu', 'enrollments.tu_id', '=', 'tu.id')
+    $result_major = DB::table('t_enrollments')
+    ->join('t_universities  as tu', 't_enrollments.tu_id', '=', 'tu.id')
     ->join('universities  as u', 'tu.u_id', '=', 'u.id')
     ->select( DB::raw('UCASE(u.address) as Address'),'tu.course','tu.major',
             DB::raw('SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale) as Male,
@@ -99,10 +101,9 @@ class VPPagesController extends Controller
     ->groupBy('Address','tu.major')
     ->orderBy('Address')
     ->get();
-//END FOR CHART
 
 
-    return view('pages.vp_enrollment',compact('t_univ','t_loc','t_total','result','result_univ','result_major','t_educ' ),array('user' => Auth ::user()));
+    return view('pages.vp_enrollment',compact('t_univ','t_loc','t_total','result','result_univ','result_major','t_educ','t_grand_total' ),array('user' => Auth ::user()));
     }
 
 
@@ -110,8 +111,8 @@ class VPPagesController extends Controller
     {
        // return view('pages.vp_enrollment');
 
-    $t_loc = DB::table('enrollments')
-    ->join('t_universities  as tu', 'enrollments.tu_id', '=', 'tu.id')
+    $t_loc = DB::table('t_enrollments')
+    ->join('t_universities  as tu', 't_enrollments.tu_id', '=', 'tu.id')
     ->join('universities  as u', 'tu.u_id', '=', 'u.id')
     ->select('tu.education', DB::raw('UCASE(u.address) as Address'))
     ->groupBy('Address','tu.education')

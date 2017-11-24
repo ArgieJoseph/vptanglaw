@@ -246,6 +246,21 @@
           @endif
       @endforeach
 
+       @foreach($t_grand_total as $key =>$tgt)
+
+
+        <tr>
+          <td style="width: 40%; border:1px solid black; padding-left:10em;  font-weight: bold; color:black; background-color:blue;">GRAND TOTAL</td>   
+          <td  style="width: 40%; border:1px solid black;color:black; background-color:blue;">{{ $tgt->Male}}</td>  
+          <td  style="width: 40%; border:1px solid black;color:black; background-color:blue;">{{ $tgt->malepercent}}</td>  
+          <td  style="width: 40%; border:1px solid black;color:black; background-color:blue;">{{ $tgt->Female}}</td>  
+          <td  style="width: 40%; border:1px solid black;color:black; background-color:blue;">{{ $tgt->femalepercent}}</td>  
+          <td  style="width: 40%; border:1px solid black;color:black; background-color:blue;">{{ $tgt->total}}</td>  
+          <td  style="width: 40%; border:1px solid black;color:black; background-color:blue;">{{ $tgt->totalpercent}}</td>                        
+        </tr>
+
+      @endforeach
+
   </tbody>
 </table>
 
