@@ -37,19 +37,19 @@
                             <option disabled selected>Choose Category</option>
                             <option value="ByDistribution">Distribution of Administrative Employees by Office </option>
                             <option value="ByOffice">Number of Administrative Employees by Office</option>
-                            <option value="ByEmploymentStatus">Employment Status</option>
-                            <option value="ByGender">Gender</option>
-                            <option value="ByAge">Age Group</option>
-                            <option value="ByCivilStats">Civil Status</option>
-                            <option value="ByHEA">Highest Educational Attainment</option>
-                            <option value="ByEligibility">With and Without Eligibility</option>
-                            <option value="ByEliEarned">Eligibility/ies Earned/Passed</option>
-                            <option value="ByServiceYears">Years of Service</option>
-                            <option value="BySalaryGrade">Salary Grade</option>
-                            <option value="ByLastPromote">Number of Years of Last Promotion</option>
+                            <option value="ByEmploymentStatus">Number of Administrative Employees by Employment Status</option>
+                            <option value="ByGender">Number of Administrative Employees by Gender</option>
+                            <option value="ByAge">Number of Administrative Employees by Age Group</option>
+                            <option value="ByCivilStats">Number of Administrative Employees by Civil Status</option>
+                            <option value="ByHEA">Number of Administrative Employees by Highest Educational Attainment</option>
+                            <option value="ByEligibility">Number of  Administrative Employees by With and Without  Eligibility  </option>
+                            <option value="ByEliEarned">Number of Administrative Employees by Eligibility/ies Earned/Passed</option>
+                            <option value="ByServiceYears">Number of Administrative Employees by Years of Service in the University</option>
+                            <option value="BySalaryGrade">Number of Administrative Employees by Salary Grade</option>
+                            <option value="ByLastPromote">Number of Administrative Employees by Years of Last Promotion</option>
                             <option value="ByServiceGroup">Occupational Service Group</option>
-                            <option value="ByRateEmployees">Rate of Increase/Decrease in the Number of Administrative Employees</option>
-                            <option value="ByTrend">Administrative Employees Trend by Campus</option>
+                            <option value="ByRateEmployees">Number of Administrative Employees by Occupational Service Group</option>
+                            <option value="ByTrend">Administrative Employees Trend by Campus, Year 2012 to Year 2015</option>
                           </select>
                         </div>
                       </div>
@@ -280,6 +280,24 @@
                       </div>
                       <!-- End of Select2 -->
 
+                      <!-- Select3 -->
+                      <div id="ByEmploymentStatus" class="tago row" style="display:none">
+                        <!--chart-->
+                          <div class="col-md-12 col-sm-12  col-xs-12">
+                            <div class="x_panel">
+                              <div class="x_title">
+                                <h2>Chart</h2>
+                                <div class="clearfix"></div>
+                              </div>
+                              <div class="x_content">
+                                <div id="EmploymentStats" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                              </div>
+                            </div>
+                          </div>
+                        <!-- End of Chart -->
+                      </div>
+                      <!-- End of Select3 -->
+
                       <!-- End of selected -->
                   </div>
                 </div>
@@ -310,7 +328,7 @@
 <script src="../../vendors/code/highcharts-more.js"></script>
 <script src="../../code/modules/exporting.js"></script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
 var chart = Highcharts.chart('container', {
 
@@ -513,6 +531,67 @@ Highcharts.chart('container2', {
 });
 </script>
 
+<!-- Employment Status -->
+<script type="text/javascript">
+
+Highcharts.chart('EmploymentStats', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Number of Administrative Employees by Employment Status'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: [
+            'Office of the President',
+            'Office of the Executive Vice President',
+            'Office of the Vice President for Administration',
+            'Office of the Vice President for Finance',
+            'Office of the Vice President for Student Services',
+            'Office of the Vice President for Research, Extension, Planning and Development',
+            'Office of the Vice President for President for Academic Affairs',
+            'Office of the Vice President for for Branches and Campuses'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Number of Administrative Employees'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Casual',
+        data: [49, 71, 106, 129, 144, 176, 135, 148]
+
+    }, {
+        name: 'Permanent',
+        data: [83, 788, 98, 934, 10, 84, 0, 104]
+
+    }, {
+        name: 'Part-time',
+        data: [4, 38, 39, 41, 47, 4, 5, 59]
+
+    }]
+});
+    </script>
 
 @endsection
 
