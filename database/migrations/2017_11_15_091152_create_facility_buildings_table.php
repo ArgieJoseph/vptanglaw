@@ -16,10 +16,11 @@ class CreateFacilityBuildingsTable extends Migration
         Schema::create('facility_buildings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->string('building_name')->nullable();
-            $table->float('area')->nullable();
+            $table->string('building_name');
+            $table->float('area')->default(0);
             $table->timestamps();
         });
+         DB::statement('ALTER TABLE `facility_buildings` ADD `year` YEAR NOT NULL');
     }
 
     /**

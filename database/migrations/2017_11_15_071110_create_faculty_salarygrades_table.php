@@ -16,10 +16,12 @@ class CreateFacultySalarygradesTable extends Migration
         Schema::create('faculty_salarygrades', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('12-14')->nullable();
-            $table->integer('15-18')->nullable();
-            $table->integer('19-23')->nullable();
-            $table->integer('24-30')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');            
+            $table->integer('12-14')->default(0);
+            $table->integer('15-18')->default(0);
+            $table->integer('19-23')->default(0);
+            $table->integer('24-30')->default(0);
             $table->timestamps();
         });
     }

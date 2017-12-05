@@ -16,13 +16,15 @@ class CreateAdminLastpromotionyrsTable extends Migration
         Schema::create('admin_lastpromotionyrs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('none')->nullable();
-            $table->integer('below1')->nullable();
-            $table->integer('1-5')->nullable();
-            $table->integer('6-10')->nullable();
-            $table->integer('11-15')->nullable();
-            $table->integer('16-20')->nullable();
-            $table->integer('21-above')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('none')->default(0);
+            $table->integer('below1')->default(0);
+            $table->integer('1-5')->default(0);
+            $table->integer('6-10')->default(0);
+            $table->integer('11-15')->default(0);
+            $table->integer('16-20')->default(0);
+            $table->integer('21-above')->default(0);
             $table->timestamps();
         });
     }

@@ -16,9 +16,11 @@ class CreateFacultyDegreesTable extends Migration
         Schema::create('faculty_degrees', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('bachelor')->nullable();
-            $table->integer('master')->nullable();
-            $table->integer('phd')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('bachelor')->default(0);
+            $table->integer('master')->default(0);
+            $table->integer('phd')->default(0);
             $table->timestamps();
         });
     }

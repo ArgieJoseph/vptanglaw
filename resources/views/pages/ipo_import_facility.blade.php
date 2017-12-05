@@ -42,7 +42,7 @@
 
                     <div class="col-md-9" style="padding-left: 240px;">
 
-                           {!!Form::open(['url'=>'/exceldes','method'=>'Get','id'=>'excel'])!!}
+                           {!!Form::open(['url'=>'/exceldes-facility','method'=>'Get','id'=>'excel'])!!}
                      
                            {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
 
@@ -56,7 +56,13 @@
                       <br>
                       <br>
                       <hr>
-                     {!! Form::open(array('route' => 'import-csv-excel','method'=>'POST','files'=>'true')) !!}
+                     {!! Form::open(array('route' => 'import-csv-excel-facility','method'=>'POST','files'=>'true')) !!}
+                            <div class="form-group">
+                 <div>
+                          <label class="control-label">Year</label>
+                              <input type="number" id="startYear" required=""  class="form-control" min="2000" max="2200" step="1" placeholder="2017">
+             </div>
+             <div>
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
            
                       <br>

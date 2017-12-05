@@ -42,7 +42,7 @@
 
                     <div class="col-md-9" style="padding-left: 240px;">
 
-                           {!!Form::open(['url'=>'/exceldes','method'=>'Get','id'=>'excel'])!!}
+                           {!!Form::open(['url'=>'/exceldes-admin','method'=>'Get','id'=>'excel'])!!}
                      
                            {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
 
@@ -56,7 +56,7 @@
                       <br>
                       <br>
                       <hr>
-                     {!! Form::open(array('route' => 'import-csv-excel','method'=>'POST','files'=>'true')) !!}
+                     {!! Form::open(array('route' => 'import-csv-excel-admin','method'=>'POST','files'=>'true')) !!}
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
            
                       <br>

@@ -16,8 +16,10 @@ class CreateAdminEligibilitynosTable extends Migration
         Schema::create('admin_eligibilitynos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('with')->nullable();
-            $table->integer('without')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('with')->default(0);
+            $table->integer('without')->default(0);
             $table->timestamps();
         });
     }

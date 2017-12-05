@@ -17,9 +17,10 @@ class CreateFacilityCapacitiesTable extends Migration
             $table->increments('id');
             $table->integer('u_id');
             $table->string('facility_name');
-            $table->string('capacity')->nullable();
+            $table->string('capacity')->default(0);
             $table->timestamps();
         });
+         DB::statement('ALTER TABLE `facility_capacities` ADD `year` YEAR NOT NULL');
     }
 
     /**

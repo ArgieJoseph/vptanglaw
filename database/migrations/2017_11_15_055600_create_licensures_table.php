@@ -25,6 +25,8 @@ class CreateLicensuresTable extends Migration
             $table->string('placer')->nullable();
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE `licensures` ADD `year` YEAR NOT NULL');
     }
 
     /**

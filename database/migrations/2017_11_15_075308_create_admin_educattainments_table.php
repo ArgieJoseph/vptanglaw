@@ -16,15 +16,17 @@ class CreateAdminEducattainmentsTable extends Migration
         Schema::create('admin_educattainments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('elem_level')->nullable();
-            $table->integer('elem_grad')->nullable();
-            $table->integer('hs_level')->nullable();
-            $table->integer('hs_grad')->nullable();
-            $table->integer('vocational')->nullable();
-            $table->integer('college_level')->nullable();
-            $table->integer('college_grad')->nullable();
-            $table->integer('masters')->nullable();
-            $table->integer('phd')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('elem_level')->default(0);
+            $table->integer('elem_grad')->default(0);
+            $table->integer('hs_level')->default(0);
+            $table->integer('hs_grad')->default(0);
+            $table->integer('vocational')->default(0);
+            $table->integer('college_level')->default(0);
+            $table->integer('college_grad')->default(0);
+            $table->integer('masters')->default(0);
+            $table->integer('phd')->default(0);
             $table->timestamps();
         });
     }

@@ -16,12 +16,14 @@ class CreateAdminEmpstatusesTable extends Migration
         Schema::create('admin_empstatuses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('casual_male')->nullable();
-            $table->integer('casual_female')->nullable();
-            $table->integer('permanent_male')->nullable();
-            $table->integer('permanent_female')->nullable();
-            $table->integer('pt_male')->nullable();
-            $table->integer('pt_female')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('casual_male')->default(0);
+            $table->integer('casual_female')->default(0);
+            $table->integer('permanent_male')->default(0);
+            $table->integer('permanent_female')->default(0);
+            $table->integer('pt_male')->default(0);
+            $table->integer('pt_female')->default(0);
             $table->timestamps();
         });
     }

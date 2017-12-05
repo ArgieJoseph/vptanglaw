@@ -16,12 +16,14 @@ class CreateAdminSalarygradesTable extends Migration
         Schema::create('admin_salarygrades', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('u_id');
-            $table->integer('1-5')->nullable();
-            $table->integer('6-10')->nullable();
-            $table->integer('11-15')->nullable();
-            $table->integer('16-20')->nullable();
-            $table->integer('21-25')->nullable();
-            $table->integer('26-30')->nullable();
+            $table->integer('sem_id');
+            $table->integer('sy_id');
+            $table->integer('1-5')->default(0);
+            $table->integer('6-10')->default(0);
+            $table->integer('11-15')->default(0);
+            $table->integer('16-20')->default(0);
+            $table->integer('21-25')->default(0);
+            $table->integer('26-30')->default(0);
             $table->timestamps();
         });
     }
