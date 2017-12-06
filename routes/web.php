@@ -152,23 +152,35 @@ Route::get('/ipo_enrollment','IPOEnrollmentController@enrollment')->name('ipo_en
 Route::get('/ipo_faculty','IPOFacultyController@faculty')->name('ipo_faculty');
 Route::get('/ipo_facility','IPOFacilityController@facility')->name('ipo_facility');
 Route::get('/ipo_admin','IPOAdminController@admin')->name('ipo_admin');
+Route::get('/ipo_graduate','IPOGraduateController@graduate')->name('ipo_grad');
+Route::get('/ipo_licensure','IPOLicensureController@licensure')->name('ipo_licen');
 // Route::get('/ipo_campus','IPOMainController@index2')->name('ipo_camp');
 ///for enrollment
 Route::Get('/exceldes','IPOEnrollmentController@export');
 Route::post('import-csv-excel',array('as'=>'import-csv-excel','uses'=>'IPOEnrollmentController@importHE'));
 //for faculty
 Route::Get('/exceldes-faculty','IPOFacultyController@exportfaculty');
-Route::post('import-csv-excel-faculty',array('as'=>'import-csv-excel-faculty','uses'=>'IPOFacultyController@importfaculty'));
+Route::post('import-csv-excel-faculty',array('as'=>'import-csv-excel-faculty','uses'=>'IPOFacultyController@import'));
 
 Route::Get('/exceldes-admin','IPOAdminController@exportAdmin');
 Route::post('import-csv-excel-admin',array('as'=>'import-csv-excel-admin','uses'=>'IPOAdminController@importAdmin'));
 
 Route::Get('/exceldes-facility','IPOFacilityController@exportFacility');
 Route::post('import-csv-excel-facility',array('as'=>'import-csv-excel-facility','uses'=>'IPOAdminController@importAdmin'));
+
+Route::Get('/exceldes-licensure','IPOLicensureController@exportLicensure');
+Route::post('import-csv-excel-licensure',array('as'=>'import-csv-excel-licensure','uses'=>'IPOLicensureController@import'));
+
+Route::Get('/exceldes-graduate','IPOGraduateController@exportGraduate');
+Route::post('import-csv-excel-graduate',array('as'=>'import-csv-excel-graduate','uses'=>'IPOGraduateController@import'));
 //Route::Get('/exceldes','IPOMainController@export');
 //Route::Post('/importHE','IPOMainController@import');
 
-
+//Registrar
+Route::get('/rg_enrollment','IPOEnrollmentController@enrollment')->name('rg_enroll');
+Route::get('/rg_faculty','IPOFacultyController@faculty')->name('rg_faculty');
+Route::get('/rg_facility','IPOFacilityController@facility')->name('rg_facility');
+Route::get('/rg_admin','IPOAdminController@admin')->name('rg_facility_admin');
 
 
 
@@ -177,3 +189,22 @@ Route::get('/child','ChaController@child')->name('chacha');
 
 Route::get('/admin_performance_points','AdminPerformancePointsController@index')->name('admin_points');
 Route::get('/admin_performance_deadline','AdminPerformanceDeadlineController@index')->name('admin_deadline');
+
+//testing vue
+
+Route::get('/', function() {
+    // this doesn't do anything other than to
+    // tell you to go to /fire
+    return "go to /fire";
+});
+
+Route::get('fire', function () {
+    // this fires the event
+    event(new App\Events\EventName());
+    return "event fired";
+});
+
+Route::get('test', function () {
+    // this checks for the event
+    return view('test');
+});

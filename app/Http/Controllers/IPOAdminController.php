@@ -46,6 +46,7 @@ class IPOAdminController extends Controller
           return view('pages.ipo_import_admin',compact('semester','sy','branch'),array('user'=> Auth::user()));
     }
 
+
     public function importAdmin(Request $request){
 
               if($request->hasFile('sample_file')){

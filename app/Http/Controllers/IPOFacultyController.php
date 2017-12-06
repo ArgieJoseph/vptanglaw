@@ -418,7 +418,7 @@ class IPOFacultyController extends Controller
                 })->export('xlsx');
             }
 
- public function importFaculty(Request $request){
+ public function import(Request $request){
 
               if($request->hasFile('sample_file')){
                
