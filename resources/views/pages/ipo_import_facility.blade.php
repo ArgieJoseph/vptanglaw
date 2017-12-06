@@ -57,10 +57,11 @@
                       <br>
                       <hr>
                      {!! Form::open(array('route' => 'import-csv-excel-facility','method'=>'POST','files'=>'true')) !!}
+                     {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
                             <div class="form-group">
                  <div>
                           <label class="control-label">Year</label>
-                              <input type="number" id="startYear" required=""  class="form-control" min="2000" max="2200" step="1" placeholder="2017">
+                              <input type="number" id="year" name="year" required=""  class="form-control" min="2000" max="2200" step="1" placeholder="2017">
              </div>
              <div>
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
@@ -108,59 +109,7 @@
 
                       @section('script')
                      <script type="text/javascript">
-                      
-             $(document).ready(function(){
-
-                      $.ajaxSetup({
-                      headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-
-                      });
-                    });
-
-          $('#addSySem').on('submit',function(e){
-                      e.preventDefault();
-                     var u_id = $('#id').val();
-                    
-
-                      var url =$(this).attr('action');
-                      var post = $(this).attr('method');
-                      //var data = $(this).serialize();
-                      //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
-                        $.ajax({
-                        type : post,
-                        url : url,
-                        data : {'u_id':u_id},
-
-                              success:function(data){
-                                alert(data.msg);
-
-                              }  
-                      }) 
-                    })
-
-    // $('#excel').on('submit',function(e){
-    //           e.preventDefault();
-    //          var u_id = $('#id').val();
-            
-
-    //           var url =$(this).attr('action');
-    //           var post = $(this).attr('method');
-    //           //var data = $(this).serialize();
-    //           //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
-    //             $.ajax({
-    //             type : post,
-    //             url : url,
-    //             data : {'u_id':u_id},
-
-    //                   success:function(data){
-    //                     alert(data.msg);
-
-    //                   }  
-    //           }) 
-    //         })
-
+       
          
 
 </script>

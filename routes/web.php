@@ -166,7 +166,7 @@ Route::Get('/exceldes-admin','IPOAdminController@exportAdmin');
 Route::post('import-csv-excel-admin',array('as'=>'import-csv-excel-admin','uses'=>'IPOAdminController@importAdmin'));
 
 Route::Get('/exceldes-facility','IPOFacilityController@exportFacility');
-Route::post('import-csv-excel-facility',array('as'=>'import-csv-excel-facility','uses'=>'IPOAdminController@importAdmin'));
+Route::post('import-csv-excel-facility',array('as'=>'import-csv-excel-facility','uses'=>'IPOFacilityController@import'));
 
 Route::Get('/exceldes-licensure','IPOLicensureController@exportLicensure');
 Route::post('import-csv-excel-licensure',array('as'=>'import-csv-excel-licensure','uses'=>'IPOLicensureController@import'));

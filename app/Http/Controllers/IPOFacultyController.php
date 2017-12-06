@@ -61,14 +61,14 @@ class IPOFacultyController extends Controller
                $acadrank_ft = array('NoofInstructor', 'AssistantProf','AssociateProfessor','Professor');
                $acadrank_pt = array('NoofInstructor', 'Lecturer','Assistantlecturer','AssociateLecturer','ProfessorialLecturer','UniversityProfessorialLecturer');
                $achievement = array('International', 'National');
-               $agegroup = array('25-below', '26-31','32-37','38-43','44-49','50-55','56-61','26-27','68-73','74-79','80-above');
+               $agegroup = array('25below', '26to31','32to37','38to43','44to49','50to55','56to61','62to67','68to73','74to79','80above');
                $degree = array('Bachelor', 'Master','PhD');
-               $program = array('Classification', 'Benifeciary');
+               $program = array('Classification', 'Benefeciary');
                $research = array('Research');
-               $salarygrade = array('12-14','15-18','19-23','24-30');
+               $salarygrade = array('12to14','15to18','19to23','24to30');
                $specialization = array('EducScienceTeacherTraining','FineArts','Humanities','SocialBehavScience','BusAdmRelated','LawJurisPrudence','NaturalScience','Mathematics','ItRelated','MedicalAllied','EngineeringTech','ArchiTownPlanning','AgriForestry','ServiceTrades','MasscommDocu','others');
-               $status = array('ft_male','ft_female','pt_male','pt_female');
-               $workloadunit = array('6-below','7-12','13-18','19-24','25-30','31-36','37-42','43-above');
+               $status = array('FullTimeMale','FullTimeFemale','PartTimeMale','PartTimeFemale');
+               $workloadunit = array('6below','7to12','13to18','19to24','25to30','31to36','37to42','43above');
 
                 $acadrank_ft_data = json_decode( json_encode($acadrank_ft), true);
                 $acadrank_pt_data = json_decode( json_encode($acadrank_pt), true);
@@ -432,10 +432,252 @@ class IPOFacultyController extends Controller
         
             $path = $request->file('sample_file')->getRealPath();
             $acadrank_ft = \Excel::selectSheetsByIndex(0)->load($path)->get();
+            $acadrank_pt = \Excel::selectSheetsByIndex(1)->load($path)->get();
+            $achievement = \Excel::selectSheetsByIndex(2)->load($path)->get();
+            $agegroup = \Excel::selectSheetsByIndex(3)->load($path)->get();
+            $degree = \Excel::selectSheetsByIndex(4)->load($path)->get();
+            $programs = \Excel::selectSheetsByIndex(5)->load($path)->get();
+            $researches = \Excel::selectSheetsByIndex(6)->load($path)->get();
+            $salarygrade = \Excel::selectSheetsByIndex(7)->load($path)->get();
+            $specialization = \Excel::selectSheetsByIndex(8)->load($path)->get();
+            $statuses = \Excel::selectSheetsByIndex(9)->load($path)->get();
+            $workloadunit = \Excel::selectSheetsByIndex(10)->load($path)->get();
+
+
+
             //$tp = \Excel::selectSheetsByIndex(1)->load($path)->get();
 
 
-            if($acadrank_ft->count()){
+            if($acadrank_ft->count() || 
+                $acadrank_pt->count() || 
+                $achievement->count() || 
+                $agegroup->count() || 
+                $degree->count() || 
+                $programs->count() || 
+                $researches->count() || 
+                $salarygrade->count() || 
+                $specialization->count() || 
+                $statuses->count() || 
+                $workloadunit->count()){
+
+$below = "6below";
+$a ="7to12";
+$b ="13to18";
+$c ="19to24";
+$d ="25to30";
+$e ="31to36";
+$f ="37to42";
+$g ="43above";
+
+              foreach ($workloadunit as $key  => $value) {
+                    $wrkldnts[] = [
+          
+                     'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     '6-below' => $value->$below,
+                     '7-12' => $value->$a,
+                     '13-18' => $value->$b,
+                     '19-24' => $value->$c,
+                     '25-30' => $value->$d,
+                     '31-36' => $value->$e,
+                     '37-42' => $value->$f,
+                     '43-above' => $value->$g
+
+
+                   ];
+               
+                DB::table('faculty_workloadunits')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+              foreach ($statuses as $key  => $value) {
+                    $sttss[] = [
+          
+                     'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     'ft_male' => $value->fulltimemale,
+                     'ft_female' => $value->fulltimefemale,
+                     'pt_male' => $value->parttimemale,
+                     'pt_female' => $value->parttimefemale
+
+
+                   ];
+               
+                DB::table('faculty_statuses')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+              foreach ($specialization as $key  => $value) {
+                    $spclztn[] = [
+          
+                     'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     'educ_science_teacher_training' => $value->educscienceteachertraining,
+                     'fine_arts' => $value->finearts,
+                     'humanities' => $value->humanities,
+                     'socialbehav_science' => $value->socialbehavscience,
+                     'busadm_related' => $value->busadmrelated,
+                     'law_jurisprudence' => $value->lawjurisprudence,
+                     'natural_science' => $value->naturalscience,
+                     'it_related' => $value->itrelated,
+                     'medical_allied' => $value->medicalallied,
+                     'engineering_tech' => $value->engineeringtech,
+                     'archi_townplanning' => $value->architownplanning,
+                     'agri_forestry' => $value->agriforestry,
+                     'service_trades' => $value->servicetrades,
+                     'masscomm_docu' => $value->masscommdocu,
+                     'others' => $value->others
+
+
+                   ];
+               
+                DB::table('faculty_specializations')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+$aa="12to14";
+$bb="15to18";
+$cc="19to23";
+$dd="24to30";
+
+              foreach ($salarygrade as $key  => $value) {
+                    $slrygrd[] = [
+          
+                      'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     '12-14' => $value->$aa,
+                     '15-18' => $value->$bb,
+                     '19-23' => $value->$cc,
+                     '24-30' => $value->$dd
+
+                   ];
+               
+                DB::table('faculty_salarygrades')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+              foreach ($researches as $key  => $value) {
+                    $rsrchs[] = [
+          
+                      'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     'research' => $value->research
+
+                   ];
+               
+                DB::table('faculty_researches')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+
+              foreach ($programs as $key  => $value) {
+                    $prgrms[] = [
+          
+                      'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     'classification' => $value->classification,
+                     'beneficiary' => $value->benefeciary
+                       
+                   ];
+               
+                DB::table('faculty_programs')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+
+              foreach ($degree as $key  => $value) {
+                    $dgr[] = [
+          
+                      'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     'bachelor' => $value->bachelor,
+                     'master' => $value->master,
+                     'phd' => $value->phd
+                       
+                   ];
+               
+                DB::table('faculty_degrees')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+$h="25below";
+$i="26to31";
+$j="32to37";
+$k="38to43";
+$l="44to49";
+$m="50to55";
+$n="56to61";
+$o="62to67";
+$p="68to73";
+$q="74to79";
+$r="80above";
+
+
+              foreach ($agegroup as $key  => $value) {
+                    $aggrp[] = [
+          
+                      'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     '25-below' => $value->$h,
+                     '26-31' => $value->$i,
+                     '32-37' => $value->$j,
+                     '38-43' => $value->$k,
+                     '44-49' => $value->$l,
+                     '50-55' => $value->$m,
+                     '56-61' => $value->$n,
+                     '62-67' => $value->$o,
+                     '68-73' => $value->$p,
+                     '74-79' => $value->$q,
+                     '80-above' => $value->$r
+                       
+                   ];
+               
+                DB::table('faculty_agegroups')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+                foreach ($achievement as $key  => $value) {
+                    $achvmnt[] = [
+          
+                      'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     'international' => $value->international,
+                     'national' => $value->national
+                       
+                   ];
+               
+                DB::table('faculty_achievements')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+
                 foreach ($acadrank_ft as $key  => $value) {
                     $aft[] = [
           
@@ -446,15 +688,57 @@ class IPOFacultyController extends Controller
                      'asst_prof' => $value->assistantprof,
                      'asso_prof' => $value->associateprofessor,
                      'professor' => $value->professor
-      
-                      
+                       
                    ];
-                FacultyAcadrankFt::where('u_id', $aft[0])->delete();
+               
+                DB::table('faculty_acadrank_fts')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
                 }
 
-                if(!empty($aft) ){
+                  foreach ($acadrank_pt as $key  => $value) {
+                    $apt[] = [
+                     'u_id' => $u,
+                     'sem_id' => $sem,
+                     'sy_id' => $sys,
+                     'lecturer' => $value->lecturer,
+                     'instructor' => $value->noofinstructor,
+                     'asst_lectr' => $value->assistantlecturer,
+                     'asso_lectr' => $value->associatelecturer,
+                     'prof_lectr' => $value->professoriallecturer,
+                     'univprov_lectr' => $value->universityprofessoriallecturer
+
+                      
+                   ];
+                   DB::table('faculty_acadrank_pts')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)
+                                            ->delete();
+                }
+
+                if(!empty($aft) || !empty($apt) || 
+                    !empty($achvmnt) || !empty($aggrp) || 
+                    !empty($dgr) || !empty($prgrms) || 
+                    !empty($rsrchs) || !empty($slrygrd) || 
+                    !empty($spclztn) || !empty($sttss) || 
+                    !empty($wrkldnts)){
                  // \DB::table('t_enrollments')->detele();
                     \DB::table('faculty_acadrank_fts')->insert($aft);
+                    \DB::table('faculty_acadrank_pts')->insert($apt);
+                    \DB::table('faculty_achievements')->insert($achvmnt);
+                    \DB::table('faculty_agegroups')->insert($aggrp);
+                    \DB::table('faculty_degrees')->insert($dgr);
+                    \DB::table('faculty_programs')->insert($prgrms);
+                    \DB::table('faculty_researches')->insert($rsrchs);
+                    \DB::table('faculty_salarygrades')->insert($slrygrd);
+                    \DB::table('faculty_specializations')->insert($spclztn);
+                    \DB::table('faculty_statuses')->insert($sttss);
+                    \DB::table('faculty_workloadunits')->insert($wrkldnts);
+
+
+
+
             
                 
                     dd('Insert Record successfully.');
