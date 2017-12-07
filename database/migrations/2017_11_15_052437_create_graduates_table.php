@@ -15,11 +15,10 @@ class CreateGraduatesTable extends Migration
     {
         Schema::create('graduates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('u_id');
-            $table->integer('my_male')->default(0);
-            $table->integer('my_female')->default(0);
-            $table->integer('ye_male')->default(0);
-            $table->integer('ye_female')->default(0);
+            $table->integer('tu_id');
+            $table->integer('male')->default(0);
+            $table->integer('female')->default(0);
+            $table->boolean('mid_end')->nullable();
             $table->timestamps();
         });
         DB::statement('ALTER TABLE `graduates` ADD `year` YEAR NOT NULL');

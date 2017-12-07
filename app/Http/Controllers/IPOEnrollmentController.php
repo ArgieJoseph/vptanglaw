@@ -203,7 +203,7 @@ class IPOEnrollmentController extends Controller
             $tp = \Excel::selectSheetsByIndex(1)->load($path)->get();
 
 
-            if($he->count()){
+            if($he->count() || $tp->count()){
                 foreach ($he as $key  => $value) {
                     $arrhe[] = [
                       'id'=> $value->id,

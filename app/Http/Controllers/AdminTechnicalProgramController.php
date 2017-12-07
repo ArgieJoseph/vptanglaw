@@ -11,6 +11,7 @@ use App\University;
 use App\SchoolYear;
 use App\Semester;
 use App\Enrollment;
+use App\Graduate;
 
 
 class AdminTechnicalProgramController extends Controller
@@ -83,7 +84,10 @@ class AdminTechnicalProgramController extends Controller
 
                 $e = new Enrollment();
                 $e['tu_id'] = $tu;
-                $e->save();                
+
+                        $e->save();
+                     
+             
             }
         }
     }
