@@ -31,7 +31,9 @@ class AdminUserManagementController extends Controller
 
     public function index(Request $request)
     {
-    	
+    	        $branch= DB::table('universities')
+            ->pluck('name','id');
+
     	$admin= DB::table('role_admins')
     		->join('roles','role_admins.role_id','=','roles.id')
     		->join('admins','role_admins.admin_id','=','admins.id')
@@ -44,7 +46,7 @@ class AdminUserManagementController extends Controller
     	  if ($request->ajax()) {
             return view('tables.admin_user_table', compact('admin'));
         }
-    return view('pages.admin_user_management',compact('roles','admin'),array('user'=> Auth::user()));
+    return view('pages.admin_user_management',compact('roles','admin','branch'),array('user'=> Auth::user()));
     }
 
 
@@ -130,6 +132,7 @@ class AdminUserManagementController extends Controller
                      $role_admin['admin_id'] = $admin_id;
                      $role_admin['role_id'] = $request->role_id;
                      $role_admin['status'] = '1';
+                     $role_admin['u_id'] = $request->u_id ;
                      $role_admin->save();
 
                   

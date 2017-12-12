@@ -13,10 +13,10 @@ use App\TEnrollment;
 use App\Semester;
 use App\SchoolYear;
 
-class IPOEnrollmentController extends Controller
+class RegistrarEnrollmentController extends Controller
 {
     //
-      /**
+          /**
      * Create a new controller instance.
      *
      * @return void
@@ -24,24 +24,20 @@ class IPOEnrollmentController extends Controller
     public function __construct()
     {
        $this->middleware('auth:admin');
-       $this->middleware('IPO');
+       $this->middleware('Registrar');
       
     }
 
 
-
-      /**
+   /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function enrollment(Request $request)
+    public function index(Request $request)
     {
-         
-        $branch= DB::table('universities')
-            ->pluck('name','id');
 
-          return view('pages.ipo_import_branch',compact('semester','sy','branch'),array('user'=> Auth::user()));
+          return view('pages.rg_enrollment',array('user'=> Auth::user()));
     }
 
     public function export(Request $request)
@@ -54,7 +50,16 @@ class IPOEnrollmentController extends Controller
         ->where('status',1)
         ->value('id');
 
-           $u=$request->id;
+    $id = Auth::id();
+
+
+		$u = DB::table('role_admins')
+			 		->where('role_id',2)
+			 		->where('admin_id',$id)
+			 		->value('u_id');
+
+
+
 
       $tu = DB::table('t_universities')
       ->join('semesters','t_universities.sem_id','=','semesters.id')
@@ -191,7 +196,7 @@ class IPOEnrollmentController extends Controller
 
 
 
- public function importHE(Request $request){
+ public function import(Request $request){
 
               if($request->hasFile('sample_file')){
                
@@ -219,7 +224,7 @@ class IPOEnrollmentController extends Controller
                      '5thfemale' => $value->fthfemale
                       
                    ];
-                 TEnrollment::where('id', $value->id)->delete();
+                 TEnrollment::where('id',$value->id )->delete();
                 }
 
                 foreach ($tp as $key  => $value) {

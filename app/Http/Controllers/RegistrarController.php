@@ -32,4 +32,6 @@ class RegistrarController extends Controller
         //return view('admin.registrar');
          return view('admin.registrar',array('user'=> Auth::user()));
     }
+
+ 
 }
