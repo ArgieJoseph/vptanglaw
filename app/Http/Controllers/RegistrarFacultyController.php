@@ -14,11 +14,10 @@ use App\Semester;
 use App\SchoolYear;
 use App\FacultyAcadrankFt;
 
-class IPOFacultyController extends Controller
+class RegistrarFacultyController extends Controller
 {
     //
-
-      /**
+              /**
      * Create a new controller instance.
      *
      * @return void
@@ -26,24 +25,23 @@ class IPOFacultyController extends Controller
     public function __construct()
     {
        $this->middleware('auth:admin');
-       $this->middleware('IPO');
+       $this->middleware('Registrar');
       
     }
 
-          /**
+
+   /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function faculty(Request $request)
+    public function index(Request $request)
     {
-         
-        $branch= DB::table('universities')
-            ->pluck('name','id');
 
-          return view('pages.ipo_import_faculty',compact('semester','sy','branch'),array('user'=> Auth::user()));
+          return view('pages.rg_faculty',array('user'=> Auth::user()));
     }
-    public function exportfaculty(Request $r)
+
+      public function export(Request $r)
 {     
              $sem=DB::table('semesters')
         ->where('status',1)
@@ -52,7 +50,14 @@ class IPOFacultyController extends Controller
            $sys=DB::table('school_years')
         ->where('status',1)
         ->value('id');
-      $u=$r->id;
+
+        $id = Auth::id();
+
+
+		$u = DB::table('role_admins')
+			 		->where('role_id',2)
+			 		->where('admin_id',$id)
+			 		->value('u_id');
 
       $name=DB::table('universities')
           ->where('id',$u)
@@ -418,6 +423,8 @@ class IPOFacultyController extends Controller
                 })->export('xlsx');
             }
 
+
+
  public function import(Request $request){
 
               if($request->hasFile('sample_file')){
@@ -425,7 +432,13 @@ class IPOFacultyController extends Controller
   $sem=DB::table('semesters')
         ->where('status',1)
         ->value('id');
-      $u=$request->id;
+
+       $id = Auth::id();
+		$u = DB::table('role_admins')
+			 		->where('role_id',2)
+			 		->where('admin_id',$id)
+			 		->value('u_id');
+
            $sys=DB::table('school_years')
         ->where('status',1)
         ->value('id');
@@ -448,16 +461,16 @@ class IPOFacultyController extends Controller
             //$tp = \Excel::selectSheetsByIndex(1)->load($path)->get();
 
 
-            if($acadrank_ft->count() || 
-                $acadrank_pt->count() || 
-                $achievement->count() || 
-                $agegroup->count() || 
-                $degree->count() || 
-                $programs->count() || 
-                $researches->count() || 
-                $salarygrade->count() || 
-                $specialization->count() || 
-                $statuses->count() || 
+            if($acadrank_ft->count() && 
+                $acadrank_pt->count() && 
+                $achievement->count() &&
+                $agegroup->count() && 
+                $degree->count() && 
+                $programs->count() && 
+                $researches->count() && 
+                $salarygrade->count() && 
+                $specialization->count() && 
+                $statuses->count() && 
                 $workloadunit->count()){
 
 $below = "6below";
@@ -749,11 +762,12 @@ $r="80above";
                 }
             }
 
+              else
+                {
+                  dd('You dont fill all.');
+                }
+
         }
         dd('Request data does not have any files to import.');      
     } 
-
-
-
-
 }

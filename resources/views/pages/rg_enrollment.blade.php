@@ -1,5 +1,5 @@
-@extends('admin.ipo')
-@section('title','IPO Dashboard')
+@extends('admin.registrar')
+@section('title','Registrar')
 
 
 
@@ -18,7 +18,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Facility</h2>
+                    <h2>Branch</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li class="pull-right"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -42,10 +42,7 @@
 
                     <div class="col-md-9" style="padding-left: 240px;">
 
-                           {!!Form::open(['url'=>'/exceldes-facility','method'=>'Get','id'=>'excel'])!!}
-                     
-                           {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
-
+                           {!!Form::open(['url'=>'/exceldes-reg','method'=>'Get','id'=>'excel'])!!}
 
                                   <div class="form-group text-center">
                         <label class="col-md-12" style="padding-top: 30px;"><u> {!! Form::submit('Excel Format',['class'=>'btn btn-success pull-right']) !!}
@@ -56,14 +53,7 @@
                       <br>
                       <br>
                       <hr>
-                     {!! Form::open(array('route' => 'import-csv-excel-facility','method'=>'POST','files'=>'true')) !!}
-                     {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
-                            <div class="form-group">
-                 <div>
-                          <label class="control-label">Year</label>
-                              <input type="number" id="year" name="year" required=""  class="form-control" min="2000" max="2200" step="1" placeholder="2017">
-             </div>
-             <div>
+                     {!! Form::open(array('route' => 'import-csv-excel-reg','method'=>'POST','files'=>'true')) !!}
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
            
                       <br>
@@ -109,9 +99,7 @@
 
                       @section('script')
                      <script type="text/javascript">
-       
-         
-
+                      
 </script>
         
         @endsection

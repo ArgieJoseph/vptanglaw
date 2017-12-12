@@ -57,6 +57,7 @@
                       <br>
                       <hr>
                      {!! Form::open(array('route' => 'import-csv-excel-admin','method'=>'POST','files'=>'true')) !!}
+                        {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
            
                       <br>

@@ -1,5 +1,5 @@
-@extends('admin.ipo')
-@section('title','IPO Dashboard')
+@extends('admin.registrar')
+@section('title','Registrar')
 
 
 
@@ -42,10 +42,7 @@
 
                     <div class="col-md-9" style="padding-left: 240px;">
 
-                           {!!Form::open(['url'=>'/exceldes-facility','method'=>'Get','id'=>'excel'])!!}
-                     
-                           {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
-
+                           {!!Form::open(['url'=>'/exceldes-facility-reg','method'=>'Get','id'=>'excel'])!!}
 
                                   <div class="form-group text-center">
                         <label class="col-md-12" style="padding-top: 30px;"><u> {!! Form::submit('Excel Format',['class'=>'btn btn-success pull-right']) !!}
@@ -56,12 +53,12 @@
                       <br>
                       <br>
                       <hr>
-                     {!! Form::open(array('route' => 'import-csv-excel-facility','method'=>'POST','files'=>'true')) !!}
-                     {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
+                     {!! Form::open(array('route' => 'import-csv-excel-facility-reg','method'=>'POST','files'=>'true')) !!}
+
                             <div class="form-group">
                  <div>
                           <label class="control-label">Year</label>
-                              <input type="number" id="year" name="year" required=""  class="form-control" min="2000" max="2200" step="1" placeholder="2017">
+                              <input type="number" id="year" name="year" required=""  class="form-control" min="2015" max="2200" step="1" placeholder="2017">
              </div>
              <div>
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}

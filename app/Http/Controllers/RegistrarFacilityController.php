@@ -12,13 +12,13 @@ use App\Enrollment;
 use App\TEnrollment;
 use App\Semester;
 use App\SchoolYear;
-use App\FacultyAcadrankFt;
 
-class IPOFacilityController extends Controller
+class RegistrarFacilityController extends Controller
 {
     //
 
-      /**
+
+                  /**
      * Create a new controller instance.
      *
      * @return void
@@ -26,28 +26,24 @@ class IPOFacilityController extends Controller
     public function __construct()
     {
        $this->middleware('auth:admin');
-       $this->middleware('IPO');
+       $this->middleware('Registrar');
       
     }
 
 
-
-
-          /**
+   /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function facility()
+    public function index(Request $request)
     {
-         
-        $branch= DB::table('universities')
-            ->pluck('name','id');
 
-          return view('pages.ipo_import_facility',compact('semester','sy','branch'),array('user'=> Auth::user()));
+          return view('pages.rg_facility',array('user'=> Auth::user()));
     }
 
-     public function exportFacility(Request $r)
+
+    public function export(Request $r)
     {
              $sem=DB::table('semesters')
         ->where('status',1)
@@ -56,7 +52,11 @@ class IPOFacilityController extends Controller
            $sys=DB::table('school_years')
         ->where('status',1)
         ->value('id');
-      $u=$r->id;
+       $id = Auth::id();
+		$u = DB::table('role_admins')
+			 		->where('role_id',2)
+			 		->where('admin_id',$id)
+			 		->value('u_id');
 
       $name=DB::table('universities')
           ->where('id',$u)
@@ -400,7 +400,13 @@ class IPOFacilityController extends Controller
               $sem=DB::table('semesters')
                 ->where('status',1)
                 ->value('id');
-              $u=$request->id;
+
+               $id = Auth::id();
+		$u = DB::table('role_admins')
+			 		->where('role_id',2)
+			 		->where('admin_id',$id)
+			 		->value('u_id');
+
                 $sys=DB::table('school_years')
                 ->where('status',1)
                 ->value('id');
@@ -579,7 +585,7 @@ class IPOFacilityController extends Controller
                     !empty($d) || !empty($l) || 
                     !empty($la) || !empty($s) || 
                     !empty($r) || !empty($land)){
-                 // \DB::table('t_enrollments')->detele();
+                
                     \DB::table('facility_buildings')->insert($b);
                     \DB::table('facility_capacities')->insert($c);
                     \DB::table('facility_distances')->insert($d);
@@ -603,9 +609,13 @@ class IPOFacilityController extends Controller
                 }
             }
 
+                else
+                {
+                  dd('You dont fill all.');
+                }
+
         }
         dd('Request data does not have any files to import.');      
     } 
-
 
 }

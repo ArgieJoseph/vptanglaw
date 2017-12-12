@@ -44,6 +44,12 @@
                         </label>
                       <div class="col-sm-8 col-xs-12">
                      {!!Form::select('role_id',$roles,null,['id'=>'role_id','class'=>'form-control col-md-7 col-xs-12','placeholder'=>'Select Account Role'])!!}
+
+                     <div id="laman">
+
+                        {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
+
+              </div>
                       </div>
                       </div>
                       <div class="form-group">
@@ -146,11 +152,14 @@
          @section('script')
 
          <script type="text/javascript">
-
     
 
 
           $(document).ready(function(){
+  $('#role_id').on('change.laman', function() {
+    $("#laman").toggle($(this).val() == '2' || $(this).val() == '5');
+  }).trigger('change.laman');
+
 
               $.ajaxSetup({
               headers: {
@@ -236,7 +245,7 @@
               var email = $('#email').val();
               var password = $('#inputPassword').val();
               var role_id=$('#role_id').val();
-
+              var u_id = $('#id').val();
               var url =$(this).attr('action');
               var post = $(this).attr('method');
               //var data = $(this).serialize();
@@ -244,7 +253,7 @@
                 $.ajax({
                 type : post,
                 url : url,
-                data : {'fname':fname,'mname':mname,'lname':lname,'email':email,'password':password,'role_id':role_id},
+                data : {'fname':fname,'mname':mname,'lname':lname,'email':email,'password':password,'role_id':role_id,'u_id':u_id},
                       success: function(data) {
                        
                   if($.isEmptyObject(data.error)){
@@ -254,6 +263,7 @@
                          $('#mname').val("");
                          $('#lname').val("");
                         $('#email').val("");
+                        $('#id').val("");
                         $('#inputPassword').val("");
                         $('#role_id').val("");
                     $(".print-error-msg").remove();
@@ -400,7 +410,11 @@ $('#search').on('keyup',function(){
                 }
               })
 
-            }  */        
+            }  */      
+
+
+  
+ 
           </script>
     
         @endsection
