@@ -65,15 +65,22 @@ public function search(Request $r)
             $technicalprog="";
             $grandtotal="";
 
-            $t_loc =  DB::select('CALL SP_ENROLLMENT_COMPUTE_LOCATION(?,?)',array($r->schoolyear,$r->sem));
 
-            $t_univ =  DB::select('CALL SP_ENROLLMENT_COMPUTE_STUDENT(F_ENROLLMENT_COMPUTE_STUDENT(@TOTALSTUD),?,?)',array($r->schoolyear,$r->sem));
+            $t_loc =  DB::select('CALL SP_ENROLLMENT_COMPUTE_LOCATION');
 
-            $t_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_PER_CAMPUS_EDUC(F_ENROLLMENT_COMPUTE_STUDENT(@TOTALSTUD),?,?)',array($r->schoolyear,$r->sem));
+            $t_univ =  DB::select('CALL SP_ENROLLMENT_COMPUTE_STUDENT(?,?,F_EN_TOTAL'.'('.$r->schoolyear.','.$r->sem.')'.')',array($r->schoolyear,$r->sem));
 
-            $t_educ =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_EDUC(F_ENROLLMENT_COMPUTE_STUDENT(@TOTALSTUD),?,?)',array($r->schoolyear,$r->sem));
+            $t_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_PER_CAMPUS_EDUC(?,?,F_EN_TOTAL'.'('.$r->schoolyear.','.$r->sem.')'.')',array($r->schoolyear,$r->sem));
 
-            $t_grand_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_GRAND_TOTAL(F_ENROLLMENT_COMPUTE_STUDENT(@TOTALSTUD),?,?)',array($r->schoolyear,$r->sem));
+            $t_educ =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_EDUC(?,?,F_EN_TOTAL'.'('.$r->schoolyear.','.$r->sem.')'.')',array($r->schoolyear,$r->sem));
+
+            $t_grand_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_GRAND_TOTAL(?,?,F_EN_TOTAL'.'('.$r->schoolyear.','.$r->sem.')'.')',array($r->schoolyear,$r->sem));
+            
+
+
+/*            $t_educ =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_EDUC(F_ENROLLMENT_COMPUTE_STUDENT(?,?,?)',array($r->schoolyear,$r->sem,1600));
+*/
+/*            $t_grand_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_GRAND_TOTAL(F_ENROLLMENT_COMPUTE_STUDENT(?,?,?)',array($r->schoolyear,$r->sem,1600));*/
 
 
             foreach($t_loc as $key =>$tl)
