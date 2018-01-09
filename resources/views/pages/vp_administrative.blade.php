@@ -58,7 +58,7 @@
                       <!-- Select1 -->
                       <div id="ByDistribution" class="tago row" style="display:none">
                         <!--chart-->
-                          <div class="col-md-12 col-sm-12  col-xs-12">
+                        <div class="col-md-12 col-sm-12  col-xs-12">
                             <div class="x_panel">
                               <div class="x_title">
                                 <h2>Chart</h2>

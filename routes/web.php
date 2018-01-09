@@ -135,6 +135,10 @@ Route::get('/vp_finance', 'VPPagesController@vp_finance')->name('vp_fin');
 Route::get('/vp_facility', 'VPPagesController@vp_facility')->name('vp_faci');
 Route::get('/vp_appendices', 'VPPagesController@vp_appendices')->name('vp_app');
 Route::get('/vp_index', 'VPPagesController@vp_index')->name('vp_index');
+Route::get('/vp_search_enrollment', 'VPPagesController@search');
+
+
+
 
 
 //IPO
