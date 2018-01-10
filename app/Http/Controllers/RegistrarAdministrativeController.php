@@ -14,12 +14,11 @@ use App\Semester;
 use App\SchoolYear;
 use App\FacultyAcadrankFt;
 
-
-class IPOAdminController extends Controller
+class RegistrarAdministrativeController extends Controller
 {
     //
 
-      /**
+                  /**
      * Create a new controller instance.
      *
      * @return void
@@ -27,25 +26,21 @@ class IPOAdminController extends Controller
     public function __construct()
     {
        $this->middleware('auth:admin');
-       $this->middleware('IPO');
+       $this->middleware('Registrar');
       
     }
 
 
-                  /**
-       * Show the application dashboard.
+   /**
+     * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function admin(Request $request)
+    public function index(Request $request)
     {
-         
-        $branch= DB::table('universities')
-            ->pluck('name','id');
 
-          return view('pages.ipo_import_admin',compact('semester','sy','branch'),array('user'=> Auth::user()));
+          return view('pages.rg_admin',array('user'=> Auth::user()));
     }
-
 
     public function import(Request $request){
 
@@ -54,7 +49,13 @@ class IPOAdminController extends Controller
   $sem=DB::table('semesters')
         ->where('status',1)
         ->value('id');
-      $u=$request->id;
+
+    $id = Auth::id();
+		$u = DB::table('role_admins')
+			 		->where('role_id',2)
+			 		->where('admin_id',$id)
+			 		->value('u_id');
+
            $sys=DB::table('school_years')
         ->where('status',1)
         ->value('id');
@@ -451,6 +452,11 @@ $iqwe="61above";
                 }
             }
 
+                else
+                {
+                  dd('You dont fill all.');
+                }
+
         }
         dd('Request data does not have any files to import.');      
     } 
@@ -458,7 +464,7 @@ $iqwe="61above";
 
 
 
-   public function exportAdmin(Request $r)
+   public function export(Request $r)
     {
               $sem=DB::table('semesters')
         ->where('status',1)
@@ -467,7 +473,13 @@ $iqwe="61above";
            $sys=DB::table('school_years')
         ->where('status',1)
         ->value('id');
-      $u=$r->id;
+      $id = Auth::id();
+
+
+		$u = DB::table('role_admins')
+			 		->where('role_id',2)
+			 		->where('admin_id',$id)
+			 		->value('u_id');
 
       $name=DB::table('universities')
           ->where('id',$u)
@@ -877,5 +889,4 @@ $iqwe="61above";
 
               })->export('xlsx');
             }
-
 }

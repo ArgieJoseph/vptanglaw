@@ -18,6 +18,7 @@ class CreateRoleAdminsTable extends Migration
             $table->integer('role_id')->unsigned();
             $table->integer('admin_id')->unsigned();
             $table->boolean('status')->nullable();
+            $table->integer('u_id')->nullable();
             $table->timestamps();
         });
     }
