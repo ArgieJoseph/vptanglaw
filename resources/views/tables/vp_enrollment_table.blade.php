@@ -43,7 +43,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p class="text-muted font-13 m-b-30">
+				<p id="headertable" class="text-muted font-13 m-b-30 ">
 					<b><h2><center>Enrollment in the Branches by Program and Gender</center></h2></b>
 				</p>
 				<table id="datatable-buttons" class="table table table-bordered" style="margin: 0px 2px 0px 2px; width: 99%;border:1px solid black;table-layout:fixed;">

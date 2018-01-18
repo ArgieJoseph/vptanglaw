@@ -64,6 +64,7 @@ public function search(Request $r)
             $higherprog="";
             $technicalprog="";
             $grandtotal="";
+            $schoolsem="";
 
 
             $t_loc =  DB::select('CALL SP_ENROLLMENT_COMPUTE_LOCATION');
@@ -75,13 +76,28 @@ public function search(Request $r)
             $t_educ =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_EDUC(?,?,F_EN_TOTAL'.'('.$r->schoolyear.','.$r->sem.')'.')',array($r->schoolyear,$r->sem));
 
             $t_grand_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_GRAND_TOTAL(?,?,F_EN_TOTAL'.'('.$r->schoolyear.','.$r->sem.')'.')',array($r->schoolyear,$r->sem));
-            
+
+            $schoolyear = DB::table('school_years')
+            ->select('start_date','end_date')
+            ->where('id', $r->schoolyear)
+            ->get();
+
+            $semester = DB::table('semesters')
+            ->select('name')
+            ->where('id', $r->sem)
+            ->get();
 
 
-/*            $t_educ =  DB::select('CALL SP_ENROLLMENT_COMPUTE_TOTAL_EDUC(F_ENROLLMENT_COMPUTE_STUDENT(?,?,?)',array($r->schoolyear,$r->sem,1600));
-*/
-/*            $t_grand_total =  DB::select('CALL SP_ENROLLMENT_COMPUTE_GRAND_TOTAL(F_ENROLLMENT_COMPUTE_STUDENT(?,?,?)',array($r->schoolyear,$r->sem,1600));*/
 
+            foreach($semester as $key =>$sem)
+            {   
+                foreach($schoolyear as $key =>$scy)
+                {   
+                    $schoolsem.= $sem->name.',  S.Y. '.$scy->start_date.'-'.$scy->end_date.'</center>'.'</h4>'.'</b>'.$schoolsem.='<b>'.'<h4>'.'<center>';
+                    
+                }
+                
+            }
 
             foreach($t_loc as $key =>$tl)
             {
@@ -284,7 +300,7 @@ public function search(Request $r)
                         '</tr>';
             }
 
-            return response()->json(array($higherprog,$technicalprog,$grandtotal));
+            return response()->json(array($higherprog,$technicalprog,$grandtotal,$schoolsem));
 
         }  
 
@@ -294,9 +310,73 @@ public function search(Request $r)
      *
      */ 
 
-        if($r->category == "YearProgram"){
+        if($r->category == "YearProgram")
+        {
 
-        }         
+        }   
+
+        if($r->category == "GenderProgramChart")
+        {
+
+    $result = DB::table('t_enrollments')->join('t_universities  as tu', 't_enrollments.tu_id', '=', 'tu.id')
+    ->join('universities  as u', 'tu.u_id', '=', 'u.id')
+    ->join('semesters  as sem', 'tu.sem_id', '=', 'sem.id')
+    ->join('school_years  as sy', 'tu.sy_id', '=', 'sy.id')
+    ->select( DB::raw('UCASE(u.address) as Address, SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale)+SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale) as total'))
+    ->groupBy('Address')
+    ->orderBy('course')
+    ->where('tu.sy_id', $r->schoolyear)
+    ->where('tu.sem_id', $r->sem)
+    ->get()->toArray();
+        
+
+
+    $result_univ = DB::table('t_enrollments')
+    ->join('t_universities  as tu', 't_enrollments.tu_id', '=', 'tu.id')
+    ->join('universities  as u', 'tu.u_id', '=', 'u.id')
+    ->join('semesters  as sem', 'tu.sem_id', '=', 'sem.id')
+    ->join('school_years  as sy', 'tu.sy_id', '=', 'sy.id')
+    ->select( DB::raw('UCASE(u.address) as Address1'),'tu.course',
+              DB::raw('SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale) as Male,
+                         SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale) as Female,
+                         SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale)+SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale) as total,
+
+                         ROUND((SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale))/(SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale)+SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale)),2)*100 as malepercent,
+                         ROUND((SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale))/(SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale)+SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale)),2)*100 as femalepercent'))
+    ->groupBy('Address','tu.course')
+    ->orderBy('Address')
+    ->where('tu.sy_id', $r->schoolyear)
+    ->where('tu.sem_id', $r->sem)
+    ->get();
+
+
+
+    $result_major = DB::table('t_enrollments')
+    ->join('t_universities  as tu', 't_enrollments.tu_id', '=', 'tu.id')
+    ->join('universities  as u', 'tu.u_id', '=', 'u.id')
+    ->join('semesters  as sem', 'tu.sem_id', '=', 'sem.id')
+    ->join('school_years  as sy', 'tu.sy_id', '=', 'sy.id')
+    ->select( DB::raw('UCASE(u.address) as Address'),'tu.course','tu.major',
+            DB::raw('SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale) as Male,
+                    
+                    SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale) as Female, 
+                    
+                    SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale)+SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale) as total,
+
+                    ROUND((SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale))/(SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale)+SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale)),2)*100 as malepercent,
+                    
+                    ROUND((SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale))/(SUM(1stmale)+SUM(2ndmale)+SUM(3rdmale)+SUM(4thmale)+SUM(5thmale)+SUM(1stfemale)+SUM(2ndfemale)+SUM(3rdfemale)+SUM(4thfemale)+SUM(5thfemale)),2)*100 as femalepercent'))
+    ->groupBy('Address','tu.major')
+    ->orderBy('Address')
+    ->where('tu.sy_id', $r->schoolyear)
+    ->where('tu.sem_id', $r->sem)
+    ->get();
+
+     return response()->json(array($result,$result_univ,$result_major));
+
+        }       
+
+
     }
  }
 
