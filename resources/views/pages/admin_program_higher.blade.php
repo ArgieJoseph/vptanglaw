@@ -77,9 +77,9 @@
             </div>
 
           </div>
-    
+      @include('admin.modal.admin_delete_higher')
           @include('admin.modal.admin_update_higher')
-                    @include('admin.modal.admin_delete_higher')
+          
 
           
 
@@ -152,23 +152,6 @@
             })
 
 
-              // $(document).on('click','.btn-dell',function(e){
-              //   var id = $(this).val();
-              //   $.ajax({
-              //     type:'post',
-              //     url: "{{url('/deleteHigher')}}",
-              //     data: {id:id},
-              //     dataType:'json',
-              //     success:function(data)
-              //     {
-              //       $('tbody tr.id'+id).remove();
-              //        data="";
-              //       getData(data);
-              //     }
-              //   })
-    
-              // });
-
                $(document).on('click','.btn-dell',function(e){
                 var id = $(this).val();
                 $.ajax({
@@ -178,23 +161,24 @@
                   dataType:'json',
                   success:function(data)
                   {
-                    var del = $('#higher-delete');
+                    var del = $('#higher-del');
                       del.find('#id').val(data.id);
-                      $('#deleteHigher').modal('show'); 
+                      $('#deleteStatus').modal('show'); 
                   }
                 })
     
               });
- $('#higher-delete').on('submit',function(e){
+               
+ $('#higher-del').on('submit',function(e){
                 e.preventDefault();
                 var data= $(this).serialize();
                 var url = $(this).attr('action');
                 var post = $(this).attr('method');
                 $.post(url,data,function(data){
-                  console.log(data);
+                  //console.log(data);
                    data="";
                   getData(data);
-                  $('#deleteHigher').modal('hide'); 
+                  $('#deleteStatus').modal('hide'); 
                 })
               })
 //--------------------------------------------

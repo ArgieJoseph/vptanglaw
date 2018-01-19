@@ -482,7 +482,9 @@ $g ="43above";
                      '25-30' => $value->$d,
                      '31-36' => $value->$e,
                      '37-42' => $value->$f,
-                     '43-above' => $value->$g
+                     '43-above' => $value->$g,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -502,7 +504,9 @@ $g ="43above";
                      'ft_male' => $value->fulltimemale,
                      'ft_female' => $value->fulltimefemale,
                      'pt_male' => $value->parttimemale,
-                     'pt_female' => $value->parttimefemale
+                     'pt_female' => $value->parttimefemale,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -533,7 +537,9 @@ $g ="43above";
                      'agri_forestry' => $value->agriforestry,
                      'service_trades' => $value->servicetrades,
                      'masscomm_docu' => $value->masscommdocu,
-                     'others' => $value->others
+                     'others' => $value->others,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -558,7 +564,9 @@ $dd="24to30";
                      '12-14' => $value->$aa,
                      '15-18' => $value->$bb,
                      '19-23' => $value->$cc,
-                     '24-30' => $value->$dd
+                     '24-30' => $value->$dd,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
                    ];
                
@@ -574,7 +582,9 @@ $dd="24to30";
                       'u_id' => $u,
                      'sem_id' => $sem,
                      'sy_id' => $sys,
-                     'research' => $value->research
+                     'research' => $value->research,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
                    ];
                
@@ -592,7 +602,9 @@ $dd="24to30";
                      'sem_id' => $sem,
                      'sy_id' => $sys,
                      'classification' => $value->classification,
-                     'beneficiary' => $value->benefeciary
+                     'beneficiary' => $value->benefeciary,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
                        
                    ];
                
@@ -611,7 +623,9 @@ $dd="24to30";
                      'sy_id' => $sys,
                      'bachelor' => $value->bachelor,
                      'master' => $value->master,
-                     'phd' => $value->phd
+                     'phd' => $value->phd,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
                        
                    ];
                
@@ -650,7 +664,9 @@ $r="80above";
                      '62-67' => $value->$o,
                      '68-73' => $value->$p,
                      '74-79' => $value->$q,
-                     '80-above' => $value->$r
+                     '80-above' => $value->$r,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
                        
                    ];
                
@@ -667,7 +683,9 @@ $r="80above";
                      'sem_id' => $sem,
                      'sy_id' => $sys,
                      'international' => $value->international,
-                     'national' => $value->national
+                     'national' => $value->national,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
                        
                    ];
                
@@ -687,7 +705,9 @@ $r="80above";
                      'instructor' => $value->noofinstructor,
                      'asst_prof' => $value->assistantprof,
                      'asso_prof' => $value->associateprofessor,
-                     'professor' => $value->professor
+                     'professor' => $value->professor,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
                        
                    ];
                
@@ -707,7 +727,9 @@ $r="80above";
                      'asst_lectr' => $value->assistantlecturer,
                      'asso_lectr' => $value->associatelecturer,
                      'prof_lectr' => $value->professoriallecturer,
-                     'univprov_lectr' => $value->universityprofessoriallecturer
+                     'univprov_lectr' => $value->universityprofessoriallecturer,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
                       
                    ];

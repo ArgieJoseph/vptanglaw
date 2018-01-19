@@ -73,9 +73,9 @@
             </div>
 
           </div>
-    
+    @include('admin.modal.admin_delete_technical')
           @include('admin.modal.admin_update_technical')
-          @include('admin.modal.admin_delete_technical')
+          
           
 
 

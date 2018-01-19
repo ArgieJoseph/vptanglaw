@@ -151,12 +151,19 @@ class AdminCampusController extends Controller
         {
             if($r->ajax())
             {
+              $id = $r->id;
+                $s =University::find($r->id);
+              if ( $s->status == 1){
 
+                 return response(['msg'=>'You cannot delete university']);
+              }
+                else
+                {
                      University::destroy($r->id); 
-                return response(['id'=>$r->id]);
-                
+                 return response(['msg'=>'Delete Successfully!']);
+                }
             }
-            return response(['msg'=>'Delete Successfully!']);
+            
         }
 
 

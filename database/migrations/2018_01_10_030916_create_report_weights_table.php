@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUniversitiesTable extends Migration
+class CreateReportWeightsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateUniversitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('universities', function (Blueprint $table) {
+        Schema::create('report_weights', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('code');
             $table->string('name');
-            $table->string('address');
-            $table->integer('c_id');
             $table->boolean('status')->default(0);
-            $table->float('c_point')->default(0);
-            $table->float('t_point')->default(0);
-
+            $table->float('value')->default(0);
+            $table->datetime('due_date')->nullable();
+            $table->float('deduction')->nullable();
+            $table->integer('dayofdeduction')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +32,6 @@ class CreateUniversitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('universities');
+        Schema::dropIfExists('report_weights');
     }
 }
