@@ -1,5 +1,5 @@
-@extends('admin.ipo')
-@section('title','IPO Dashboard')
+@extends('admin.registrar')
+@section('title','Registrar')
 
 
 
@@ -18,7 +18,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Administrative</h2>
+                    <h2>Graduate</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li class="pull-right"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -42,9 +42,7 @@
 
                     <div class="col-md-9" style="padding-left: 240px;">
 
-                           {!!Form::open(['url'=>'/exceldes-admin','method'=>'Get','id'=>'excel'])!!}
-                     
-                           {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
+                           {!!Form::open(['url'=>'/exceldes-graduate-reg','method'=>'Get','id'=>'excel'])!!}
 
 
                                   <div class="form-group text-center">
@@ -56,18 +54,24 @@
                       <br>
                       <br>
                       <hr>
-                     {!! Form::open(array('route' => 'import-csv-excel-admin','method'=>'POST','files'=>'true')) !!}
-                        {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
-                    {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
-                    <div class="form-group">
-                       
-                     
-                         @foreach($offered as $key =>$o)
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="duedate"  name="duedate" required="required" value="{{$o->due_date}}" class="form-control col-md-7 col-xs-12 hidden">
-                        </div>
+                     {!! Form::open(array('route' => 'import-csv-excel-graduate-reg','method'=>'POST','files'=>'true')) !!}
+                            <div class="form-group">
+                 <div>
+                          <label class="control-label">Year</label>
+                              <input type="number" id="year" name="year" required=""  class="form-control" min="2000" max="2200" step="1" placeholder="2017">
+             </div>
+
+                              <div>
+                                 <div class="form-group">
+                          <select name="tyear" id="tyear" class="form-control">
+                              <option value="0">Mid Year</option>
+                              <option value="1">Year End</option>
+                        </select>
                       </div>
-            @endforeach
+             </div>
+             <div>
+                    {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
+           
                       <br>
                       <br>
                       <br>
@@ -112,59 +116,7 @@
                       @section('script')
                      <script type="text/javascript">
                       
-             $(document).ready(function(){
-
-                      $.ajaxSetup({
-                      headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-
-                      });
-                    });
-
-          $('#addSySem').on('submit',function(e){
-                      e.preventDefault();
-                     var u_id = $('#id').val();
-                    
-
-                      var url =$(this).attr('action');
-                      var post = $(this).attr('method');
-                      //var data = $(this).serialize();
-                      //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
-                        $.ajax({
-                        type : post,
-                        url : url,
-                        data : {'u_id':u_id},
-
-                              success:function(data){
-                                alert(data.msg);
-
-                              }  
-                      }) 
-                    })
-
-    // $('#excel').on('submit',function(e){
-    //           e.preventDefault();
-    //          var u_id = $('#id').val();
-            
-
-    //           var url =$(this).attr('action');
-    //           var post = $(this).attr('method');
-    //           //var data = $(this).serialize();
-    //           //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
-    //             $.ajax({
-    //             type : post,
-    //             url : url,
-    //             data : {'u_id':u_id},
-
-    //                   success:function(data){
-    //                     alert(data.msg);
-
-    //                   }  
-    //           }) 
-    //         })
-
-         
+    //         
 
 </script>
         

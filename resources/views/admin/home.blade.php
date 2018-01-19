@@ -13,7 +13,11 @@
                           <li><a href="{{url('admin_campus')}}"><i class="fa fa-institution"></i> Campus </span></a></li>
                           <li><a href="#"><i class="fa fa-laptop"></i> Program <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+<<<<<<< HEAD
                     
+=======
+                     
+>>>>>>> af71b4c77071a6c0a5eb563f685b671fa01231e4
                       <li><a href="{{route('admin_high')}}">Higher Education</a></li>
                       <li><a href="{{route('admin_tech')}}">Technical Programs</a></li>
                     </ul>

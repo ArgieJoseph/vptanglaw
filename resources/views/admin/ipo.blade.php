@@ -15,6 +15,7 @@
                       <li><a href="{{route('ipo_faculty')}}"><i class="fa fa-user"></i>Faculties</a></li>
                       <li><a href="{{route('ipo_admin')}}"><i class="fa fa-group"></i>Administratives</a></li>
                       <li><a href="{{route('ipo_facility')}}"><i class="fa fa-bed"></i>Facilities</a></li>
+                      <li><a href="{{route('ipo_scho')}}"><i class="fa fa-bed"></i>Scholarship</a></li>
                     </ul>
                   </li>
                 </div>

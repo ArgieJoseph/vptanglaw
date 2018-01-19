@@ -14,6 +14,10 @@
                       <li><a href="{{route('rg_faculty')}}"><i class="fa fa-user"></i>Faculty</a></li>
                       <li><a href="{{route('rg_admin')}}"><i class="fa fa-group"></i>Administrative</a></li>
                       <li><a href="{{route('rg_facility')}}"><i class="fa fa-bed"></i>Facilities</a></li>
+                      <li><a href="{{route('rg_licensure')}}"><i class="fa fa-bed"></i>Licensure</a></li>
+                      <li><a href="{{route('rg_graduate')}}"><i class="fa fa-bed"></i>Graduates</a></li>
+                      <li><a href="{{route('rg_admin')}}"><i class="fa fa-bed"></i>Scholarship</a></li>
+
                     </ul>
                   </li>
                 </div>

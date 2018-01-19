@@ -19,7 +19,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Add Report</h2>
+                    <h2>Edit Report Value</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li class="pull-right"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -37,34 +37,49 @@
                    </div>
 
                   <!--error catcher-->  
-                    <form class="form-horizontal" method="POST" id="addAU" action="{{ url('addUser') }}">
-                     {{csrf_field()}}
-
+                   {!!Form::open(['class'=>'form-horizontal','url'=>'updateReportVal','method'=>'POST','id'=>'updateRep'])!!}
+   
                      
                       <div class="form-group">
                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"> Report Category <span class="required">*</span>
                         </label>
-                      <div class="col-sm-6 col-xs-12">
-                        <div class="form-group">
-                        <select class="form-control col-md-7 col-xs-12" name="">
-                          <option value="1">Students</option>
-                          <option value="2">Faculties</option>
-                          <option value="3">Administrative Employees</option>
-                          <option value="4">Facilities</option>
-                        </select>
-                        </div>
-                        </div>
+                         <div class="col-sm-6 col-xs-12 col-xs-12">
+                        {!!Form::select('id',$report,null,['id'=>'id','class'=>'form-control','placeholder'=>''])!!}
                       </div>
+                      </div>
+                      <br>
 
                       
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Report Name <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Report Value<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input placeholder="Enrollment in the Branches by Program" type="text" value="{{old('fname')}}" id="report_name"  name="report_name" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="number" id="reportvalue" max="100" min="1" name="reportvalue" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
-                      </div><br>
+                      </div>
+                      <br>
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Due Date<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="date" id="duedate"  name="duedate" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div><br> 
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Report Deduction<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="number" id="deduction"  name="deduction" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div><br>  
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Per No. of Days<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="number" id="day"  name="day" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div><br>  
                         
 
                       <div class="ln_solid"></div>
@@ -74,8 +89,17 @@
                         </div>
                       </div>
 
-               </form>
+                {!!Form::close()!!}
                   </div>
+
+ <!--error catcher-->
+                    <div class="alert alert-danger print-error-msg" style="display:none">
+                      <ul></ul>
+                   </div>
+                   <div class="alert alert-success print-success-msg" style="display:none">
+                      <ul><i class="fa fa-check"></i><b>&nbsp;Successfully Added!</b></ul>
+                   </div>
+
                 </div>
               </div>
             </div>
@@ -104,17 +128,17 @@
                         </form>
                     <div class="table-responsive">
          
-                      @include('tables.admin_points_table')
 
+                      @include('tables.admin_points_table')
                     </div>
                   </div>
                 </div>
               </div>
-  @include('admin.modal.admin_update_userstatus')
+ 
             </div>
           </div>
-
-          @include('admin.modal.admin_update_user')
+@include('admin.modal.admin_update_report')
+                   
 
 
 
@@ -162,107 +186,8 @@
              alert(value);
             })
 
-      /*      $('#addAU').on('submit',function(e){
-              e.preventDefault();
-              var fname = $('#fname').val();
-              var mname = $('#mname').val();
-              var lname = $('#lname').val();
-              var email = $('#email').val();
-              var password = $('#inputPassword').val();
-              var role_id=$('#role_id').val();
 
-              var url =$(this).attr('action');
-              var post = $(this).attr('method');
-              //var data = $(this).serialize();
-              //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
-                $.ajax({
-                type : post,
-                url : url,
-                data : {'fname':fname,'mname':mname,'lname':lname,'email':email,'password':password,'role_id':role_id},
-                      success:function(data){
-                        console.log(data);
-                        data="";
-                        getData(data);
-                         $('#code').val("");
-                         $('#name').val("");
-                        $('#address').val("");
-                      },
-                       error: function(data){
-                           var errors = data.responseJSON;
-                           alert(data.errors);
-        // Render the errors with js ...
-                          }
-           });
-        
-          });*/
-           $(document).on('click','.btn-editStatus', function(e){
-
-                 var id = $(this).val();
-                 $.ajax({
-                   type:'get',
-                   url:"{{url('editUserStatus')}}",
-                   data: {id:id},
-                  success:function(data){
-                     var update = $('#user-updatestatus');
-                     update.find('#id').val(data.id);
-                     update.find('#uid').val(data.uid);
-                     update.find('#status').val(data.status);
-                     $('#editStatus').modal('show'); 
-                    }
-                 })
-                 })    
-
-            $('#addAU').on('submit',function(e){
-              e.preventDefault();
-              var fname = $('#fname').val();
-              var mname = $('#mname').val();
-              var lname = $('#lname').val();
-              var email = $('#email').val();
-              var password = $('#inputPassword').val();
-              var role_id=$('#role_id').val();
-
-              var url =$(this).attr('action');
-              var post = $(this).attr('method');
-              //var data = $(this).serialize();
-              //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
-                $.ajax({
-                type : post,
-                url : url,
-                data : {'fname':fname,'mname':mname,'lname':lname,'email':email,'password':password,'role_id':role_id},
-                      success: function(data) {
-                       
-                  if($.isEmptyObject(data.error)){
-                        data="";
-                        getData(data);
-                         $('#fname').val("");
-                         $('#mname').val("");
-                         $('#lname').val("");
-                        $('#email').val("");
-                        $('#inputPassword').val("");
-                        $('#role_id').val("");
-                    $(".print-error-msg").remove();
-                    $(".print-success-msg").show();
-                  }else{
-                    printErrorMsg(data.error);
-                  }
-                }
-           });
-        
-          });
-
-
-      function printErrorMsg (msg) {
-      $(".print-error-msg").find("ul").html('');
-      $(".print-error-msg").css('display','block');
-      $.each( msg, function( key, value ) {
-        $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
-      });
-    }
-
-
-
-
-                 $('#user-updatestatus').on('submit',function(e){
+            $('#updateRep').on('submit',function(e){
                 e.preventDefault();
                 var data= $(this).serialize();
                 var url = $(this).attr('action');
@@ -271,51 +196,52 @@
                   console.log(data);
                    data="";
                   getData(data);
-                  $('#editStatus').modal('hide'); 
+           $('#id').find('option:selected').remove();
+              $('#reportvalue').val("");
+               $('#duedate').val("");
+                $('#deduction').val("");
+                 $('#day').val("");
                 })
               })
-//--------------------------------------------
-$(document).on('click','.btn-edit', function(e){
-    var id = $(this).val();
-    $.ajax({
-      type:'get',
-      url:"{{url('editUser')}}",
-      data: {id:id},
-      success:function(data){
-        var update = $('#user-update');
-        update.find('#id').val(data.id);
-        update.find('#admin_id').val(data.admin_id);
-        update.find('#fname').val(data.fname);
-        update.find('#mname').val(data.mname);
-        update.find('#lname').val(data.lname);
-        update.find('#email').val(data.email);
-         update.find('#inputPassword').val(data.inputPassword);
-        update.find('#role_id').val(data.role_id);
-
-       $('#editModal').modal('show'); 
-       //console.log($cat);  
-      }
-    })
-
-})
 
 
-$('#user-update').on('submit',function(e){
-  e.preventDefault();
-  var data= $(this).serialize();
-  var url = $(this).attr('action');
-  var post = $(this).attr('method');
-  $.post(url,data,function(data){
-    console.log(data);
-     data="";
-    getData(data);
-     $('#editModal').modal('hide'); 
-  })
-})
 
-//--------------------------------------------
+            $('#report').on('submit',function(e){
+                e.preventDefault();
+                var data= $(this).serialize();
+                var url = $(this).attr('action');
+                var post = $(this).attr('method');
+                $.post(url,data,function(data){
+                  console.log(data);
+                   data="";
+                  getData(data);
+                  $('#editModal').modal('hide'); 
+                })
+              })
 
-//--------------------------------------------
+
+              $(document).on('click','.btn-edit', function(e){
+                  var id = $(this).val();
+                  $.ajax({
+                    type:'get',
+                    url:"{{url('editReport')}}",
+                    data: {id:id},
+                    success:function(data){
+
+                      var update = $('#report');
+                      update.find('#id').val(data.id);
+                      update.find('#reportcategory').val(data.name);
+                      update.find('#reportvalue').val(data.value);
+                      update.find('#duedate').val(data.due_date);
+                      update.find('#deduction').val(data.deduction);
+                      update.find('#day').val(data.dod);
+                     $('#editModal').modal('show'); 
+                     //console.log($cat);  
+                    }
+                  })
+
+              })
+
 function getData(page){
         $.ajax(
         {
@@ -335,56 +261,7 @@ function getData(page){
 }
 
 
-$('#frmsearch').on('submit',function(e){
-  e.preventDefault();
-  var url=$(this).attr('action');
-  var data=$(this).serializeArray();
-  var get=$(this).attr('method');
-
-  $.ajax({
-    type:get,
-    url:url,
-    data:data
-  }).done(function(data){
-    $('.table-responsive').html(data);
-  })
-
-})
-
- 
-/*
-$('#search').on('keyup',function(){
-    $value=$(this).val();
-    $.ajax({
-      type:'get',
-      url:"{{url('search')}}",
-      data:{'search':$value},
-      success:function(data)
-      {
-        $('tbody').html(data);
-
-      }
-
-    })
-
-})*/
-
-       /*   function read()
-            {
-              $.ajax({
-                type:'get',
-                url: "{{url('table')}}",
-                dataType: 'html',
-                success:function(data)
-                {
-                      console.log(data);
-                   //$('#datatable-responsive').DataTable(data);
-                 $('.table-responsive').html(data);
-  
-                }
-              })
-
-            }  */        
+            
           </script>
     
         @endsection
