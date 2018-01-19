@@ -328,6 +328,8 @@
 <script src="../../vendors/code/highcharts-more.js"></script>
 <script src="../../code/modules/exporting.js"></script>
 
+<!-- For by office na chart -->
+
 <script type="text/javascript">
 
 var chart = Highcharts.chart('container', {
@@ -361,8 +363,9 @@ var chart = Highcharts.chart('container', {
     }]
 
 });
-    </script>
+</script>
 
+<!-- For Number of Administrative Employees by Office -->
 <script type="text/javascript">
 
 // Create the chart
