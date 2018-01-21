@@ -216,7 +216,9 @@ class IPOEnrollmentController extends Controller
                      '4thmale' => $value->rthmale,
                      '4thfemale' => $value->rthfemale,
                      '5thmale' => $value->fthmale,
-                     '5thfemale' => $value->fthfemale
+                     '5thfemale' => $value->fthfemale,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
                       
                    ];
                  TEnrollment::where('id', $value->id)->delete();
@@ -235,7 +237,9 @@ class IPOEnrollmentController extends Controller
                      '4thmale' => $value->rthmale,
                      '4thfemale' => $value->rthfemale,
                      '5thmale' => $value->fthmale,
-                     '5thfemale' => $value->fthfemale
+                     '5thfemale' => $value->fthfemale,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
                       
                    ];
                    TEnrollment::where('id', $value->id)->delete();

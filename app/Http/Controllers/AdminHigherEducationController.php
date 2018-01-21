@@ -110,11 +110,13 @@ class AdminHigherEducationController extends Controller
                   'id' => $r->id ,  
                   'u_id' => $t_u->u_id,  
                   'course' => $t_u->course,   
-                  'major' => $t_u->major
+                  'major' => $t_u->major,
                  ];
         }
+
     }
 
+    
 
   public function update(Request $r)
     {
@@ -125,7 +127,7 @@ class AdminHigherEducationController extends Controller
 		        $offered['id'] = $r['id'];
 		        $offered['course'] = $r['name'];
 		        $offered['major'] = $r['mname'];
-		        $offered['u_id'] = $r['u_id'];
+		        $offered['u_id'] = $r['univ_id'];
 		        $offered->save();
 		    
 		    return response(['msg'=>'Update Successfully!']);
@@ -148,4 +150,4 @@ class AdminHigherEducationController extends Controller
     }
 
 }
-
+//

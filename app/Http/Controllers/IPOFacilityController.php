@@ -445,7 +445,9 @@ class IPOFacilityController extends Controller
           
                      'u_id' => $u,
                      'land_area' => $value->landarea,
-                     'year' => $y
+                     'year' => $y,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -464,7 +466,9 @@ class IPOFacilityController extends Controller
                      'administrative' => $value->administrative,
                      'academic' => $value->academic,
                      'faculty_lounge' => $value->facultylounge,
-                     'year' => $y
+                     'year' => $y,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -480,7 +484,9 @@ class IPOFacilityController extends Controller
                      'u_id' => $u,
                      'sports_facility' => $value->sportsfacility,
                      'area' => $value->area,
-                     'year' => $y
+                     'year' => $y,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -498,7 +504,9 @@ class IPOFacilityController extends Controller
                      'lab_name' => $value->laboratoryname,
                      'room' => $value->room,
                      'capacity' => $value->capacity,
-                     'year' => $y
+                     'year' => $y,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -516,7 +524,9 @@ class IPOFacilityController extends Controller
                      'periodical' => $value->periodical,
                      'cd' => $value->cd,
                      'others' => $value->others,
-                     'year' => $y
+                     'year' => $y,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -532,7 +542,9 @@ class IPOFacilityController extends Controller
           
                      'u_id' => $u,
                      'distance' => $value->distance,
-                     'year' => $y
+                     'year' => $y,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -549,7 +561,9 @@ class IPOFacilityController extends Controller
                      'u_id' => $u,
                      'facility_name' => $value->facilityname,
                      'capacity' => $value->capacity,
-                     'year' => $y
+                     'year' => $y,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];
@@ -566,7 +580,9 @@ class IPOFacilityController extends Controller
                      'u_id' => $u,
                      'building_name' => $value->buildingname,
                      'area' => $value->area,
-                     'year' => $y
+                     'year' => $y,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                'updated_at' => \Carbon\Carbon::now()
 
 
                    ];

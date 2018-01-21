@@ -56,8 +56,8 @@ Route::get('/admin_program_higher','AdminHigherEducationController@index')->name
 Route::post('addHigherEducation','AdminHigherEducationController@create');
 Route::get('editHigherEducation','AdminHigherEducationController@edit');
 Route::post('updateHigher','AdminHigherEducationController@update');
-Route::get('/getidHigher', 'AdminHigherEducationController@edit');
-Route::post('/deleteHigher', 'AdminHigherEducationController@delete');
+Route::get('/getidHigher','AdminHigherEducationController@edit');
+Route::post('deleteHigher','AdminHigherEducationController@delete');
 //TECHNICAL PROGRAM
 Route::get('/admin_program_technical','AdminTechnicalProgramController@index')->name('admin_tech');
 Route::post('addTechnicalProgram','AdminTechnicalProgramController@create');
@@ -98,7 +98,11 @@ Route::POST('admin-password/reset','Admin\ResetPasswordController@reset');
 Route::GET('admin-password/reset/{token}','Admin\ResetPasswordController@showResetForm')->name('admin.password.reset');
 //ADMIN EVALUATION SETUP
 Route::get('/admin_performance_points','AdminPerformancePointsController@index')->name('admin_points');
+Route::get('/editReport','AdminPerformancePointsController@edit');
+Route::post('updateReport','AdminPerformancePointsController@update');
+Route::post('updateReportVal','AdminPerformancePointsController@update');
 Route::get('/admin_performance_deadline','AdminPerformanceDeadlineController@index')->name('admin_deadline');
+
 
 
 //---------------------REGISTRAR ROUTES---------------------------------------------------------------------------------//
@@ -106,6 +110,9 @@ Route::get('/rg_enrollment','RegistrarEnrollmentController@index')->name('rg_enr
 Route::get('/rg_faculty','RegistrarFacultyController@index')->name('rg_faculty');
 Route::get('/rg_facility','RegistrarFacilityController@index')->name('rg_facility');
 Route::get('/rg_admin','RegistrarAdministrativeController@index')->name('rg_admin');
+Route::get('/rg_licensure','RegistrarLicensureController@index')->name('rg_licensure');
+Route::get('/rg_graduate','RegistrarGraduateController@index')->name('rg_graduate');
+
 //ENROLLMENT
 Route::Get('/exceldes-reg','RegistrarEnrollmentController@export'); 
 Route::post('import-csv-excel-reg',array('as'=>'import-csv-excel-reg','uses'=>'RegistrarEnrollmentController@import'));
@@ -118,7 +125,12 @@ Route::post('import-csv-excel-admin-reg',array('as'=>'import-csv-excel-admin-reg
 //FACILITY
 Route::Get('/exceldes-facility-reg','RegistrarFacilityController@export');
 Route::post('import-csv-excel-facility-reg',array('as'=>'import-csv-excel-facility-reg','uses'=>'RegistrarFacilityController@import'));
-
+//LICENSURE
+Route::Get('/exceldes-licensure-reg','RegistrarLicensureController@export');
+Route::post('import-csv-excel-licensure-reg',array('as'=>'import-csv-excel-licensure-reg','uses'=>'RegistrarLicensureController@import'));
+//GRADUATE
+Route::Get('/exceldes-graduate-reg','RegistrarGraduateController@export');
+Route::post('import-csv-excel-graduate-reg',array('as'=>'import-csv-excel-graduate-reg','uses'=>'RegistrarGraduateController@import'));
 
 
 
@@ -135,6 +147,10 @@ Route::get('/vp_finance', 'VPPagesController@vp_finance')->name('vp_fin');
 Route::get('/vp_facility', 'VPPagesController@vp_facility')->name('vp_faci');
 Route::get('/vp_appendices', 'VPPagesController@vp_appendices')->name('vp_app');
 Route::get('/vp_index', 'VPPagesController@vp_index')->name('vp_index');
+Route::get('/vp_search_enrollment', 'VPPagesController@search');
+
+
+
 
 
 //IPO
@@ -145,6 +161,7 @@ Route::get('/ipo_facility','IPOFacilityController@facility')->name('ipo_facility
 Route::get('/ipo_admin','IPOAdminController@admin')->name('ipo_admin');
 Route::get('/ipo_graduate','IPOGraduateController@graduate')->name('ipo_grad');
 Route::get('/ipo_licensure','IPOLicensureController@licensure')->name('ipo_licen');
+Route::get('/ipo_scholarship','IPOScholarshipController@index')->name('ipo_scho');
 ///for enrollment
 Route::Get('/exceldes','IPOEnrollmentController@export');
 Route::post('import-csv-excel',array('as'=>'import-csv-excel','uses'=>'IPOEnrollmentController@importHE'));
@@ -164,6 +181,8 @@ Route::post('import-csv-excel-licensure',array('as'=>'import-csv-excel-licensure
 Route::Get('/exceldes-graduate','IPOGraduateController@exportGraduate');
 Route::post('import-csv-excel-graduate',array('as'=>'import-csv-excel-graduate','uses'=>'IPOGraduateController@import'));
 
+Route::Get('/exceldes-scholarship','IPOScholarshipController@export');
+Route::post('import-csv-excel-scholarship',array('as'=>'import-csv-excel-scholarship','uses'=>'IPOScholarshipController@import'));
 
 
 // Route::Get('/excel','ExcelController@export');

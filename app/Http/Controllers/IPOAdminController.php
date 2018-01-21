@@ -13,6 +13,7 @@ use App\TEnrollment;
 use App\Semester;
 use App\SchoolYear;
 use App\FacultyAcadrankFt;
+use App\ReportWeight;
 
 
 class IPOAdminController extends Controller
@@ -42,14 +43,19 @@ class IPOAdminController extends Controller
          
         $branch= DB::table('universities')
             ->pluck('name','id');
+              $offered = DB::table('report_weights')->where('name','Administrative')->get();
 
-          return view('pages.ipo_import_admin',compact('semester','sy','branch'),array('user'=> Auth::user()));
+              
+
+          return view('pages.ipo_import_admin',compact('semester','sy','branch','offered'),array('user'=> Auth::user()));
     }
 
 
     public function import(Request $request){
 
               if($request->hasFile('sample_file')){
+
+                
                
   $sem=DB::table('semesters')
         ->where('status',1)
@@ -113,7 +119,9 @@ $jsy="36above";
                      '21-25' => $value->$gsy,
                      '26-30' => $value->$hsy,
                      '31-35' => $value->$isy,
-                     '36-above' => $value->$jsy
+                     '36-above' => $value->$jsy,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
                      
                       
@@ -145,7 +153,9 @@ $fs="others";
                      'med_health' => $value->$cs,
                      'educ_archival' => $value->$ds,
                      'defense_security' => $value->$es,
-                     'others' => $value->$fs
+                     'others' => $value->$fs,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
                      
                       
@@ -177,7 +187,9 @@ $fsg="26to30";
                      '11-15' => $value->$csg,
                      '16-20' => $value->$dsg,
                      '21-25' => $value->$esg,
-                     '26-30' => $value->$fsg
+                     '26-30' => $value->$fsg,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
                      
                       
@@ -212,7 +224,9 @@ $gl="21above";
                      '6-10' => $value->$dl,
                      '11-15' => $value->$el,
                      '16-20' => $value->$fl,
-                     '21-above' => $value->$gl
+                     '21-above' => $value->$gl,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
                      
                       
                    ];
@@ -245,7 +259,9 @@ $femp="parttimefemale";
                      'permanent_male' => $value->$cemp,
                      'permanent_female' => $value->$demp,
                      'pt_male' => $value->$eemp,
-                     'pt_female' => $value->$femp
+                     'pt_female' => $value->$femp,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
                      
                       
                    ];
@@ -268,7 +284,9 @@ $belo="without";
                      'sem_id' => $sem,
                      'sy_id' => $sys,
                      'with' => $value->$aelo,
-                     'without' => $value->$belo
+                     'without' => $value->$belo,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
                      
 
@@ -299,7 +317,9 @@ $eena="others";
                      'cs_subpro' => $value->$bena,
                      'testimonial' => $value->$cena,
                      'tesda' => $value->$dena,
-                     'others' => $value->$eena
+                     'others' => $value->$eena,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
                      
 
       
@@ -337,7 +357,9 @@ $ittt="phd";
                      'college_level' => $value->$fttt,
                      'college_grad' => $value->$gttt,
                      'masters' => $value->$httt,
-                     'phd' => $value->$ittt
+                     'phd' => $value->$ittt,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
       
                       
@@ -368,7 +390,9 @@ $ecv="annulled";
                      'married' => $value->$bcv,
                      'widowed' => $value->$ccv,
                      'separated' => $value->$dcv,
-                     'annulled' => $value->$ecv
+                     'annulled' => $value->$ecv,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
    
                       
                    ];
@@ -404,7 +428,9 @@ $iqwe="61above";
                      '46-50' => $value->$fqwe,
                      '51-55' => $value->$gqwe,
                      '56-60' => $value->$hqwe,
-                     '61-above' => $value->$iqwe
+                     '61-above' => $value->$iqwe,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
       
                       
@@ -441,6 +467,30 @@ $iqwe="61above";
                     \DB::table('admin_serviceyrs')->insert($sy);
 
 
+                    //point computation
+                    //get datas
+            $univ = University::find($u);
+
+             //  $cdate = \Carbon\Carbon::now();
+              
+             //  $rep = DB::table('report_weights')->where('name','Administrative')->pluck('id');
+             //  $repdata= ReportWeight::find($rep);
+             //  $value= $repdata->value;
+             //  $ddate= new Carbon ($repdata->due_date);
+             //  $ded = $repdata->deduction;
+             //  $dedpday =$repdata->dayofdeduction;
+             //  //Compute date days ded
+             // // $difference=($cdate->diff($now)->day )
+             //  $diff= $cdate->diffInDays($ddate);
+
+
+
+
+         //     $univ['c_point'] = ;
+           //    $univ['t_point'] = ;
+              
+              $univ->save();
+
             
                 
                     dd('Insert Record successfully.');
@@ -452,7 +502,21 @@ $iqwe="61above";
             }
 
         }
-        dd('Request data does not have any files to import.');      
+        $cdate = \Carbon\Carbon::today();
+          $rep = DB::table('report_weights')->where('name','Administrative')->pluck('id');
+         // $data= ReportWeight::find($rep);
+          $ddd=\Carbon\Carbon::parse($request->duedate);
+              $ded= ReportWeight::find($rep)->pluck('deduction');
+              $value= ReportWeight::find($rep)->pluck('value');
+              $dd=ReportWeight::where('id',$rep)->pluck('due_date'); 
+             //$aa=$ddd->diffInDays(\Carbon\Carbon::now()); 
+              $aa=$dd->diffInDays($cdate);
+              $day=ReportWeight::find($rep)->pluck('dayofdeduction');
+              //Compute date days ded
+             // $difference=($cdate->diff($now)->day )
+             //$diff = $cdate->diffInDays($dd);
+      //  dd($aa);   
+      dd($aa,$ddd,$cdate); 
     } 
   
 
