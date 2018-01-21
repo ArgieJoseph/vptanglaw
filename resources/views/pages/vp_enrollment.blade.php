@@ -4,11 +4,7 @@
 
 
 @section('body')
-
-
-      <!-- page content -->
- 
-          
+         
 <!-- page content -->
  
       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -96,7 +92,7 @@
 <thead>
 <tr>
     <th rowspan="3" style="width: 35%; border:1px solid black;"><center><h3>PROGRAMS</h3> </center></th>
-    <th colspan="6" style="width: 40%; border:1px solid black;"><center>GENDER </center></th>
+    <th colspan="6" style="width: 40%; border:1px solid black;"><center>GENDER</center></th>
 </tr>
 <tr>
     <th colspan="2" style="width: 21%; border:1px solid black;"><center>MALE</center></th>
@@ -146,7 +142,7 @@
         @if ($tl->Address == $tt->Address && $tt->education == "Higher Education")
 
         <tr>
-          <td  style="width: 40%; border:1px solid black; padding-left:29em; color:black;  font-weight: bold; background-color:#bfbfbf;">Total</td>
+          <td  style="width: 40%; border:1px solid black; padding-left:29em; color:black;  font-weight: bold;background-color:#bfbfbf;">Total</td>
             <td  style="width: 40%; border:1px solid black; color:black;  background-color:#bfbfbf;">{{ $tt->Male}}</td>   
             <td  style="width: 40%; border:1px solid black; color:black; background-color:#bfbfbf; ">{{ $tt->malepercent}}</td>  
            <td  style="width: 40%; border:1px solid black; color:black;  background-color:#bfbfbf;">{{ $tt->Female}}</td>   
@@ -180,27 +176,22 @@
 
   </tbody>
 
+   <!--TECHNICAL EDUC-->
+
     <tr>
       <th colspan="7" style="width: 10.5%; border:1px solid black;   color:black;  font-weight: bold; background-color: #ffc000;">TECHNICAL PROGRAMS</th>             
     </tr>
-   
-
-
-
-   <!--TECHNICAL EDUC-->
-
 
 <tbody>
    @foreach($t_loc as $key =>$tl)
   <tr>
-      @if ($tl->education == "Technical Program"  )
+      @if ($tl->education == "Technical Program")
       <th colspan="7" style="width: 40%; border:1px solid black; padding-left:1.5em; font-weight: bold; color:black;">{{ $tl->Address}}</th>
   </tr>
       @foreach($t_univ as $key =>$sp)
 
-        @if ($sp->Address == $tl->Address && $sp->education == "Technical Program" )
+        @if ($sp->Address == $tl->Address && $sp->education == "Technical Program")
 
-       
         <tr>
           <td  style="width: 40%; border:1px solid black; padding-left:2.5em; color:black;">{{ $sp->course ."-". $sp->major}}</td>   
           <td  style="width: 40%; border:1px solid black;color:black;">{{ $sp->Male}}</td>  
@@ -252,14 +243,10 @@
                 </div>
               </div>
                   
-
                   </div>
                 </div>
               </div>
 
-           
-
-    
                      <br>
                      <br>
                      <br>
@@ -286,7 +273,7 @@
             for(var prop in obj)
             {
              if(obj.hasOwnProperty(prop) && !isNaN(obj[prop]))
-            {
+              {
                   obj[prop] = +obj[prop];   
               }
             }
@@ -305,7 +292,7 @@
             for(var prop in obj)
             {
              if(obj.hasOwnProperty(prop) && !isNaN(obj[prop]))
-            {
+              {
                   obj[prop] = +obj[prop];   
               }
             }
@@ -323,7 +310,7 @@
             for(var prop in obj)
             {
              if(obj.hasOwnProperty(prop) && !isNaN(obj[prop]))
-            {
+              {
                   obj[prop] = +obj[prop];   
               }
             }
@@ -340,7 +327,6 @@
 
     $.each(JSON.parse(JSON.stringify(result)), function(idx, obj) //foreach result ng data query Address(eg. QC, Sanjuan meaning = 2 loop) na nifetch galing sa result variable mag loloop yung process na nasa loob ng loop ng bracket which populates variable na gagamitin para sa chart
       {
-
 
         var user = {};//initialized variable
 
@@ -367,14 +353,10 @@
  
         if(user.drilldown == obj1.Address1)//so kung parehas 
         {
-//pasa na nung mga data sa drilldown_user
+          //pasa na nung mga data sa drilldown_user
           drilldown_user.data.push({name: obj1.course, y: obj1.total, drilldown: obj1.course},);
           
-          
           drill_down_data.push(drilldown_user);//pinasa ulit ang data sa drilldown_user_data na variable for 2nd level na to
-
-
-
 
             $.each(JSON.parse(JSON.stringify(result_major)), function(idx, obj2) 
             {
@@ -388,16 +370,12 @@
 
           });
 
-
         }
-      
+
       });
-         
-    
-
-
 
     });
+
     // Create the chart
     $('#sampledrill').highcharts({
         chart: {
@@ -430,17 +408,8 @@
         }],
         drilldown: {
                     series: drill_down_data.concat(drill_down_data_major),
-                  
-               
         }
     })
 });
-
-
 </script>
-
-
-
-
-
-        @endsection 
+@endsection 
