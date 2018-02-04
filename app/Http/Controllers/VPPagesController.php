@@ -37,7 +37,7 @@ class VPPagesController extends Controller
          return view('pages.vp_index',array('user'=> Auth::user()));
     }
 
-    /**
+     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
@@ -383,6 +383,7 @@ public function search(Request $r)
     }
  }
 
+
       /**
      * Show the application dashboard.
      *
@@ -544,6 +545,8 @@ public function search(Request $r)
         return view('pages.vp_appendices',array('user' => Auth ::user()));
     }
 
+
+   
     
 }
 
