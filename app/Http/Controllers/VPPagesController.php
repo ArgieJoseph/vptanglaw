@@ -401,13 +401,87 @@ public function search(Request $r)
     {
         //return view('pages.vp_scholarship');
         return view('pages.vp_scholarship',array('user' => Auth ::user()));
+
+        //FOR TABLE START
+        // $t_loc2 = DB::table('scholarships')
+        // ->join('t_universities as tu', 'scholarships.tu_id', '=', 'tu.id')
+        // ->join('universities as u', 'tu.u_id', '=', 'u.id')
+        // ->select('tu.education', DB::raw('UCASE(u.address) as Address'))
+        // ->groupBy('Address','tu.education')
+        // ->orderBy('course')->get();
+
+        // $t_univ2 =  DB::select('CALL SP_SCHOLARSHIP_COMPUTE_STUDENT(F_SCHOLARSHIP_COMPUTE_STUDENT(@TOTALSTUD_SCHOLARSHIP))');
+
+        // $t_total2 =  DB::select('CALL SP_SCHOLARSHIP_COMPUTE_TOTAL_PER_CAMPUS_EDUC(F_SCHOLARSHIP_COMPUTE_STUDENT(@TOTALSTUD_SCHOLARSHIP))');
+
+        // $t_educ2 =  DB::select('CALL SP_SCHOLARSHIP_COMPUTE_TOTAL_EDUC(F_SCHOLARSHIP_COMPUTE_STUDENT(@TOTALSTUD_SCHOLARSHIP))');
+        // END FOR TABLE
+        // FOR CHART START
+        // $result2 = DB::table('scholarships')->join('t_universities as tu', 'scholarships.tu_id', '=', 'tu.id')
+        // ->join('universities as u', 'tu.u_id', '=', 'u.id')
+        // ->select( DB::raw('UCASE(u.address) as Address,
+        //         SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)+SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female)+SUM(sga_male)+SUM(sga_female)+SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female) as total'))
+        // ->groupBy('Address')
+        // ->orderBy('course')
+        // ->get()->toArray();
+            
+        //NAKAKALOKA YUNG SA DIVISOR
+        // $result_univ2 = DB::table('scholarships')
+        // ->join('t_universities  as tu', 'scholarships.tu_id', '=', 'tu.id')
+        // ->join('universities  as u', 'tu.u_id', '=', 'u.id')
+        // ->select( DB::raw('UCASE(u.address) as Address1'),'tu.course',
+        //           DB::raw('SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)) as Entrance,
+        //                     SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female) as Resident,
+        //                     SUM(sga_male)+SUM(sga_female) as Special,
+        //                     SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female) as Financial,
+        //                     SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_male)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)+SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female)+SUM(sga_male)+SUM(sga_female)+SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female) as total,
+
+        //                      ROUND((SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female))/(
+        //                         SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)+SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female)+SUM(sga_male)+SUM(sga_female)+SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female)),2)*100 as entrancePercent,
+        //                      ROUND((SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female))/(
+        //                         SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)+SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female)+SUM(sga_male)+SUM(sga_female)+SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female)),2)*100 as residentPercent,
+        //                      ROUND((SUM(sga_male)+SUM(sga_female))/(
+        //                         SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)+SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female)+SUM(sga_male)+SUM(sga_female)+SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female)),2)*100 as specialPercent,
+        //                      ROUND((SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female))/(
+        //                         SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)+SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female)+SUM(sga_male)+SUM(sga_female)+SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female)),2)*100 as financialPercent,
+        //                      ROUND((SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)+SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female)+SUM(sga_male)+SUM(sga_female)+SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female))/(
+        //                         SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)+SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female)+SUM(sga_male)+SUM(sga_female)+SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female)),2)*100 as totalPercent'))
+        // ->groupBy('Address','tu.course')
+        // ->orderBy('Address')->get();
+
+
+
+        // $result_major2 = DB::table('scholarships')
+        // ->join('t_universities  as tu', 'scholarships.tu_id', '=', 'tu.id')
+        // ->join('universities  as u', 'tu.u_id', '=', 'u.id')
+        // ->select( DB::raw('UCASE(u.address) as Address'),'tu.course','tu.major',
+        //         DB::raw('SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female) as Entrance,
+                        
+        //                 SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female) as Resident,
+
+        //                 SUM(sga_male)+SUM(sga_female) as Special,
+
+        //                 SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female) as Financial, 
+                        
+        //                 SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female)+SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female)+SUM(sga_male)+SUM(sga_female)+SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female) as total,
+
+        //                 ROUND((SUM(ent_valid_male)+SUM(ent_valid_female)+SUM(ent_salut_male)+SUM(ent_salut_female)+SUM(ent_firsthon_male)+SUM(ent_firsthon_female)+SUM(ent_achiever_male)+SUM(ent_achiever_female)+SUM(ent_athlete_male)+SUM(ent_athlete_female)+SUM(ent_culturalart_male)+SUM(ent_culturalart_female)+SUM(ent_filmart_male)+SUM(ent_filmart_female)+SUM(ent_hsscpres_male)+SUM(ent_hsscpres_female))/total,2)*100 as entrancePercent,
+                        
+        //                 ROUND((SUM(resi_preslist_male)+SUM(resi_preslist_female)+SUM(resi_deanlist_male)+SUM(resi_deanlist_female))/total,2)*100 as residentPercent,
+
+        //                 ROUND((SUM(sga_male)+SUM(sga_female))/total,2)*100 as specialPercent,
+                        
+        //                 ROUND((SUM(fa_culturalgrp_male)+SUM(fa_culturalgrp_female)+SUM(fa_sc_male)+SUM(fa_sc_female))/total,2)*100 as financialPercent'))
+        // ->groupBy('Address','tu.major')
+        // ->orderBy('Address')
+        // ->get();
+    //END FOR CHART
+
+
+        // return view('pages.vp_scholarship',compact('t_univ2','t_loc2','t_total2','result2','result_univ2','result_major2','t_educ2' ),array('user' => Auth ::user()));
     }
 
-      /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function vp_licensure()
     {
        // return view('pages.vp_licensure');
