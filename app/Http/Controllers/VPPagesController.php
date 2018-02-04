@@ -56,7 +56,10 @@ public function search(Request $r)
 {
     if($r->ajax())
     {
-
+                      /**
+     * Show the report for Gender & Program.
+     *
+     */ 
 
         if($r->category == "GenderProgram")
         {
@@ -305,7 +308,7 @@ public function search(Request $r)
         }  
 
 
-               /**
+        /**
      * Show the report for Year & Program.
      *
      */ 
