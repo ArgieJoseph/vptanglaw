@@ -17,6 +17,7 @@ class CreateFacilityLandareasTable extends Migration
             $table->increments('id');
             $table->integer('u_id');
             $table->float('land_area')->nullable();
+            $table->float('t_point')->default(0);
             $table->timestamps();
         });
          DB::statement('ALTER TABLE `facility_landareas` ADD `year` YEAR NOT NULL');

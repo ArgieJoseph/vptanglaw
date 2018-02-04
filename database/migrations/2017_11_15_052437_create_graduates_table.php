@@ -19,6 +19,7 @@ class CreateGraduatesTable extends Migration
             $table->integer('male')->default(0);
             $table->integer('female')->default(0);
             $table->boolean('mid_end')->nullable();
+            $table->float('t_point')->default(0);
             $table->timestamps();
         });
         DB::statement('ALTER TABLE `graduates` ADD `year` YEAR NOT NULL');

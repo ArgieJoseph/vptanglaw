@@ -112,6 +112,7 @@ Route::get('/rg_facility','RegistrarFacilityController@index')->name('rg_facilit
 Route::get('/rg_admin','RegistrarAdministrativeController@index')->name('rg_admin');
 Route::get('/rg_licensure','RegistrarLicensureController@index')->name('rg_licensure');
 Route::get('/rg_graduate','RegistrarGraduateController@index')->name('rg_graduate');
+Route::get('/rg_scholarship','RegistrarScholarshipController@index')->name('rg_scho');
 
 //ENROLLMENT
 Route::Get('/exceldes-reg','RegistrarEnrollmentController@export'); 
@@ -131,6 +132,10 @@ Route::post('import-csv-excel-licensure-reg',array('as'=>'import-csv-excel-licen
 //GRADUATE
 Route::Get('/exceldes-graduate-reg','RegistrarGraduateController@export');
 Route::post('import-csv-excel-graduate-reg',array('as'=>'import-csv-excel-graduate-reg','uses'=>'RegistrarGraduateController@import'));
+
+//SCHOLARSHIP
+Route::Get('/exceldes-scholarship-reg','RegistrarScholarshipController@export');
+Route::post('import-csv-excel-scholarship-reg',array('as'=>'import-csv-excel-scholarship-reg','uses'=>'RegistrarScholarshipController@import'));
 
 
 

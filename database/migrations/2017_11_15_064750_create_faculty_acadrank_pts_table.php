@@ -24,6 +24,7 @@ class CreateFacultyAcadrankPtsTable extends Migration
             $table->integer('asso_lectr')->default(0);
             $table->integer('prof_lectr')->default(0);  
             $table->integer('univprov_lectr')->default(0);
+            $table->float('t_point')->default(0);
             $table->timestamps();
         });
     }

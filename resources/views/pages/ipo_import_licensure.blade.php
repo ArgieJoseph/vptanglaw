@@ -42,7 +42,7 @@
 
                     <div class="col-md-9" style="padding-left: 240px;">
 
-                           {!!Form::open(['url'=>'/exceldes-licensure','method'=>'Get','id'=>'excel'])!!}
+                  {!!Form::open(['url'=>'/exceldes-licensure','method'=>'Get','id'=>'excel'])!!}
                      
                            {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
 
@@ -52,6 +52,7 @@
 </u>.</label>
                       </div>
                       {!! Form::close() !!}
+
                       <br>
                       <br>
                       <br>
@@ -66,7 +67,13 @@
              </div>
              <div>
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
-           
+                              
+             @foreach($offered as $key => $o)
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="duedate"  name="duedate" required="required" value="{{$o->due_date}}" class="form-control col-md-7 col-xs-12 hidden">
+                        </div>
+                      </div>
+            @endforeach
                       <br>
                       <br>
                       <br>

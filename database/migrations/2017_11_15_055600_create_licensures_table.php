@@ -23,6 +23,7 @@ class CreateLicensuresTable extends Migration
             $table->integer('pup_passer')->nullable();
             $table->integer('pup_examinee')->nullable();
             $table->string('placer')->nullable();
+            $table->float('t_point')->default(0);
             $table->timestamps();
         });
 

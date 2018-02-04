@@ -12,6 +12,9 @@ use App\Enrollment;
 use App\TEnrollment;
 use App\Semester;
 use App\SchoolYear;
+use App\ReportWeight;
+use App\University;
+
 
 class IPOEnrollmentController extends Controller
 {
@@ -41,7 +44,9 @@ class IPOEnrollmentController extends Controller
         $branch= DB::table('universities')
             ->pluck('name','id');
 
-          return view('pages.ipo_import_branch',compact('semester','sy','branch'),array('user'=> Auth::user()));
+            $offered = DB::table('report_weights')->where('name','Enrollment')->get();
+
+          return view('pages.ipo_import_branch',compact('semester','sy','branch','offered'),array('user'=> Auth::user()));
     }
 
     public function export(Request $request)
@@ -202,6 +207,20 @@ class IPOEnrollmentController extends Controller
             $tp = \Excel::selectSheetsByIndex(1)->load($path)->get();
 
 
+             $sem=DB::table('semesters')
+        ->where('status',1)
+        ->value('id');
+
+                  $id = Auth::id();
+        $u = DB::table('role_admins')
+          ->where('admin_id',$id)
+          ->value('u_id');
+          
+           $sys=DB::table('school_years')
+        ->where('status',1)
+        ->value('id');
+
+
             if($he->count() || $tp->count()){
                 foreach ($he as $key  => $value) {
                     $arrhe[] = [
@@ -248,6 +267,51 @@ class IPOEnrollmentController extends Controller
                  // \DB::table('t_enrollments')->detele();
                     \DB::table('t_enrollments')->insert($arrhe);
                     \DB::table('t_enrollments')->insert($arrtp);
+
+                    //currentdate
+          $cdate = \Carbon\Carbon::today();
+//getting id of report to provide values
+          $rep = DB::table('report_weights')->where('name','Enrollment')->pluck('id');
+//duedate parse to carbon
+          $ddd=\Carbon\Carbon::parse($request->duedate);
+          //return deduction
+              $ded= DB::table('report_weights')->where('id',$rep)->value('deduction');
+          //return value of report/perfect points
+              $value= DB::table('report_weights')->where('id',$rep)->value('value');
+//diff function
+              $aa=$ddd->diffInDays($cdate);
+//return no of days per deduction
+              $day=DB::table('report_weights')->where('id',$rep)->value('dayofdeduction');
+//round
+              $count=round($aa/$day);
+//return value to be deduct
+              $tded = $count*$ded;
+              //timeliness
+              $tvalue = $value-$tded;
+
+              //DB::table('users')->whereId(Auth::user()->id)->increment('position');
+                                          
+
+              $nid= DB::table('t_universities')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)->value('id');
+
+              $adminid=DB::table('t_enrollments')->where('tu_id',$nid)->value('id');
+
+
+            
+              //completeness(increment[will depend on how many times they will import or change the data they submitted])
+            // DB::table('admin_empstatuses')->whereId($adminid)->increment('c_point');
+              $unive=University::find($u);
+              $unive['c_point']= $unive['c_point']+1;
+             
+              $unive->save();
+  
+              $univ=TEnrollment::find($adminid);
+              $univ['t_point'] = $tvalue;
+             
+              $univ->save();
+
                 
                     dd('Insert Record successfully.');
                 }
