@@ -58,6 +58,7 @@
                       <hr>
                      {!! Form::open(array('route' => 'import-csv-excel-graduate','method'=>'POST','files'=>'true')) !!}
                             <div class="form-group">
+                                  {!!Form::select('id',$branch,null,['id'=>'id','class'=>'form-control','placeholder'=>'Select Branch ...'])!!}
                  <div>
                           <label class="control-label">Year</label>
                               <input type="number" id="year" name="year" required=""  class="form-control" min="2000" max="2200" step="1" placeholder="2017">
@@ -73,7 +74,13 @@
              </div>
              <div>
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
-           
+                              
+             @foreach($offered as $key =>$o)
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="duedate"  name="duedate" required="required" value="{{$o->due_date}}" class="form-control col-md-7 col-xs-12 hidden">
+                        </div>
+                      </div>
+            @endforeach
                       <br>
                       <br>
                       <br>

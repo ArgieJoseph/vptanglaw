@@ -42,6 +42,7 @@ class CreateScholarshipsTable extends Migration
             $table->integer('fa_culturalgrp_female')->default(0);
             $table->integer('fa_sc_male')->default(0);
             $table->integer('fa_sc_female')->default(0);
+            $table->float('t_point')->default(0);
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@
 
 @section('body')
 
+      
           <div class="">
             <div class="page-title">
               <div class="title_left">
@@ -31,7 +32,8 @@
                               <div class="x_content">
                                <!--FILE UPLOADER-->
                                 <h6>*Only excel files (.xls) are accepted for imports.</h6>
-                                <h6>*Choose specific Branch/Campus first before downloading the template below.</h6>
+                  
+                                // we can put here the value and other information about the report that is configured by admin ;) 
                                <hr>
                  <div class="row">
            <div class="col-xs-12 col-sm-12 col-md-12">
@@ -42,9 +44,7 @@
                     <div class="col-md-9" style="padding-left: 240px;">
 
                            {!!Form::open(['url'=>'/exceldes-admin-reg','method'=>'Get','id'=>'excel'])!!}
-
-
-
+                     
                                   <div class="form-group text-center">
                         <label class="col-md-12" style="padding-top: 30px;"><u> {!! Form::submit('Excel Format',['class'=>'btn btn-success pull-right']) !!}
 </u>.</label>
@@ -55,9 +55,16 @@
                       <br>
                       <hr>
                      {!! Form::open(array('route' => 'import-csv-excel-admin-reg','method'=>'POST','files'=>'true')) !!}
-
                     {!! Form::file('sample_file', array('class' => 'form-control col-md-7 col-xs-12')) !!}
-           
+                    <div class="form-group">
+                       
+                     
+                         @foreach($offered as $key =>$o)
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="duedate"  name="duedate" required="required" value="{{$o->due_date}}" class="form-control col-md-7 col-xs-12 hidden">
+                        </div>
+                      </div>
+            @endforeach
                       <br>
                       <br>
                       <br>
@@ -92,7 +99,6 @@
               </div>
             </div>
           </div>
-
 
         
         @endsection

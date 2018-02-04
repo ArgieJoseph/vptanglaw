@@ -7,6 +7,7 @@ use Auth;
 use DB;
 use Excel;
 use App\Graduate;
+use App\University;
 
 class RegistrarGraduateController extends Controller
 {
@@ -32,8 +33,8 @@ class RegistrarGraduateController extends Controller
      */
     public function index(Request $request)
     {
-
-          return view('pages.rg_graduate',array('user'=> Auth::user()));
+          $offered = DB::table('report_weights')->where('name','Graduate')->get();
+          return view('pages.rg_graduate',compact('offered'),array('user'=> Auth::user()));
     }
 
 
@@ -118,9 +119,23 @@ class RegistrarGraduateController extends Controller
 
               if($request->hasFile('sample_file')){
 
-                      $y=$request->year;
-                      $my=$request->tyear;
-               
+              $y=$request->year;
+              $my=$request->tyear;
+
+                    $sem=DB::table('semesters')
+        ->where('status',1)
+        ->value('id');
+
+           $sys=DB::table('school_years')
+        ->where('status',1)
+        ->value('id');
+           
+              $id = Auth::id();
+             
+              $u = DB::table('role_admins')
+                    ->where('role_id',2)
+                    ->where('admin_id',$id)
+                    ->value('u_id');               
 
         
             $path = $request->file('sample_file')->getRealPath();
@@ -131,13 +146,13 @@ class RegistrarGraduateController extends Controller
             if($grad->count()){
                 foreach ($grad as $key  => $value) {
                     $arrgrad[] = [
-                      'tu_id' => $value->id,
+                     'tu_id' => $value->id,
                      'male' => $value->male,
                      'female' => $value->female,
                      'mid_end' => $my,
                      'year'=>$y,
-                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
-            		'updated_at' => \Carbon\Carbon::now()
+                     'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+            		     'updated_at' => \Carbon\Carbon::now()
                       
                    ];
                      
@@ -151,8 +166,47 @@ class RegistrarGraduateController extends Controller
              
                 if(!empty($arrgrad) ){
                  // \DB::table('t_enrollments')->detele();
-                    \DB::table('graduates')->insert($arrgrad);
-       
+                      \DB::table('graduates')->insert($arrgrad);
+                      $cdate = \Carbon\Carbon::today();
+//getting id of report to provide values
+                      $rep = DB::table('report_weights')->where('name','Graduate')->pluck('id');
+//duedate parse to carbon
+                      $ddd=\Carbon\Carbon::parse($request->duedate);
+          //return deduction
+                      $ded= DB::table('report_weights')->where('id',$rep)->value('deduction');
+          //return value of report/perfect points
+                      $value= DB::table('report_weights')->where('id',$rep)->value('value');
+//diff function
+                      $aa=$ddd->diffInDays($cdate);
+//return no of days per deduction
+                      $day=DB::table('report_weights')->where('id',$rep)->value('dayofdeduction');
+//round
+                      $count=round($aa/$day);
+//return value to be deduct
+                      $tded = $count*$ded;
+              //timeliness
+                      $tvalue = $value-$tded;
+
+              //DB::table('users')->whereId(Auth::user()->id)->increment('position');
+                                          
+                      $nid= DB::table('t_universities')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)->value('id');
+
+                      $adminid= DB::table('graduates')->where('tu_id',$nid)
+                                        ->where('mid_end',$my)
+                                        ->where('year',$y)->value('id');
+
+              //completeness(increment[will depend on how many times they will import or change the data they submitted])
+            // DB::table('admin_empstatuses')->whereId($adminid)->increment('c_point');
+              $unive=University::find($u);
+              $unive['c_point']= $unive['c_point']+1;
+             
+              $unive->save();
+  
+              $univ=Graduate::find($adminid);
+              $univ['t_point'] = $tvalue;
+              $univ->save();
                 
                     dd('Insert Record successfully.');
                 }

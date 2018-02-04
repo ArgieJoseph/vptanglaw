@@ -7,6 +7,7 @@ use DB;
 use Auth;
 use Excel;
 use App\Licensure;
+use App\University;
 
 class RegistrarLicensureController extends Controller
 {
@@ -31,8 +32,8 @@ class RegistrarLicensureController extends Controller
     public function index(Request $request)
     {
 
-
-          return view('pages.rg_licensure',array('user'=> Auth::user()));
+          $offered = DB::table('report_weights')->where('name','Administrative')->get();
+          return view('pages.rg_licensure',compact('offered'),array('user'=> Auth::user()));
     }
 
 
@@ -145,6 +146,45 @@ class RegistrarLicensureController extends Controller
                 if(!empty($arrli) ){
                     \DB::table('licensures')->insert($arrli);
                 
+
+                               //currentdate
+          $cdate = \Carbon\Carbon::today();
+//getting id of report to provide values
+          $rep = DB::table('report_weights')->where('name','Licensure')->pluck('id');
+//duedate parse to carbon
+          $ddd=\Carbon\Carbon::parse($request->duedate);
+          //return deduction
+              $ded= DB::table('report_weights')->where('id',$rep)->value('deduction');
+          //return value of report/perfect points
+              $value= DB::table('report_weights')->where('id',$rep)->value('value');
+//diff function
+              $aa=$ddd->diffInDays($cdate);
+//return no of days per deduction
+              $day=DB::table('report_weights')->where('id',$rep)->value('dayofdeduction');
+//round
+              $count=round($aa/$day);
+//return value to be deduct
+              $tded = $count*$ded;
+              //timeliness
+              $tvalue = $value-$tded;
+
+              //DB::table('users')->whereId(Auth::user()->id)->increment('position');
+                                          
+
+              $adminid= DB::table('licensures')->where('u_id',$u)
+                                        ->where('year',$y)->value('id');
+
+              //completeness(increment[will depend on how many times they will import or change the data they submitted])
+            // DB::table('admin_empstatuses')->whereId($adminid)->increment('c_point');
+              $unive=University::find($u);
+              $unive['c_point']= $unive['c_point']+1;
+             
+              $unive->save();
+  
+              $univ=Licensure::find($adminid);
+              $univ['t_point'] = $tvalue;
+             
+              $univ->save();
                     dd('Insert Record successfully.');
                 }
                 else

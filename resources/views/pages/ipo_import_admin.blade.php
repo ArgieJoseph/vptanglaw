@@ -33,6 +33,7 @@
                                <!--FILE UPLOADER-->
                                 <h6>*Only excel files (.xls) are accepted for imports.</h6>
                                 <h6>*Choose specific Branch/Campus first before downloading the template below.</h6>
+                                // we can put here the value and other information about the report that is configured by admin ;) 
                                <hr>
                  <div class="row">
            <div class="col-xs-12 col-sm-12 col-md-12">
@@ -112,59 +113,7 @@
                       @section('script')
                      <script type="text/javascript">
                       
-             $(document).ready(function(){
-
-                      $.ajaxSetup({
-                      headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-
-                      });
-                    });
-
-          $('#addSySem').on('submit',function(e){
-                      e.preventDefault();
-                     var u_id = $('#id').val();
-                    
-
-                      var url =$(this).attr('action');
-                      var post = $(this).attr('method');
-                      //var data = $(this).serialize();
-                      //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
-                        $.ajax({
-                        type : post,
-                        url : url,
-                        data : {'u_id':u_id},
-
-                              success:function(data){
-                                alert(data.msg);
-
-                              }  
-                      }) 
-                    })
-
-    // $('#excel').on('submit',function(e){
-    //           e.preventDefault();
-    //          var u_id = $('#id').val();
-            
-
-    //           var url =$(this).attr('action');
-    //           var post = $(this).attr('method');
-    //           //var data = $(this).serialize();
-    //           //$.post('table',{'code':code,'name':name,'address':address,'_token':$('input[name=_token]').val()}, function(data){
-    //             $.ajax({
-    //             type : post,
-    //             url : url,
-    //             data : {'u_id':u_id},
-
-    //                   success:function(data){
-    //                     alert(data.msg);
-
-    //                   }  
-    //           }) 
-    //         })
-
-         
+ 
 
 </script>
         

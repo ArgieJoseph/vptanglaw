@@ -12,7 +12,9 @@ use App\Enrollment;
 use App\TEnrollment;
 use App\Semester;
 use App\SchoolYear;
-use App\FacultyAcadrankFt;
+use App\ReportWeight;
+use App\University;
+use App\AdminEmpstatus;
 
 class RegistrarAdministrativeController extends Controller
 {
@@ -38,27 +40,27 @@ class RegistrarAdministrativeController extends Controller
      */
     public function index(Request $request)
     {
-
-          return view('pages.rg_admin',array('user'=> Auth::user()));
+            $offered = DB::table('report_weights')->where('name','Administrative')->get();
+          return view('pages.rg_admin',compact('offered'),array('user'=> Auth::user()));
     }
+
 
     public function import(Request $request){
 
               if($request->hasFile('sample_file')){
-               
-  $sem=DB::table('semesters')
-        ->where('status',1)
-        ->value('id');
 
-    $id = Auth::id();
-		$u = DB::table('role_admins')
-			 		->where('role_id',2)
-			 		->where('admin_id',$id)
-			 		->value('u_id');
+            $sem=DB::table('semesters')
+                ->where('status',1)
+                ->value('id');
+
+            $id = Auth::id();
+        $u = DB::table('role_admins')
+          ->where('admin_id',$id)
+          ->value('u_id');
 
            $sys=DB::table('school_years')
-        ->where('status',1)
-        ->value('id');
+                ->where('status',1)
+                ->value('id');
         
             $path = $request->file('sample_file')->getRealPath();
             
@@ -114,7 +116,9 @@ $jsy="36above";
                      '21-25' => $value->$gsy,
                      '26-30' => $value->$hsy,
                      '31-35' => $value->$isy,
-                     '36-above' => $value->$jsy
+                     '36-above' => $value->$jsy,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
                      
                       
@@ -146,7 +150,9 @@ $fs="others";
                      'med_health' => $value->$cs,
                      'educ_archival' => $value->$ds,
                      'defense_security' => $value->$es,
-                     'others' => $value->$fs
+                     'others' => $value->$fs,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
                      
                       
@@ -178,7 +184,9 @@ $fsg="26to30";
                      '11-15' => $value->$csg,
                      '16-20' => $value->$dsg,
                      '21-25' => $value->$esg,
-                     '26-30' => $value->$fsg
+                     '26-30' => $value->$fsg,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
                      
                       
@@ -213,7 +221,9 @@ $gl="21above";
                      '6-10' => $value->$dl,
                      '11-15' => $value->$el,
                      '16-20' => $value->$fl,
-                     '21-above' => $value->$gl
+                     '21-above' => $value->$gl,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
                      
                       
                    ];
@@ -246,7 +256,9 @@ $femp="parttimefemale";
                      'permanent_male' => $value->$cemp,
                      'permanent_female' => $value->$demp,
                      'pt_male' => $value->$eemp,
-                     'pt_female' => $value->$femp
+                     'pt_female' => $value->$femp,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
                      
                       
                    ];
@@ -269,7 +281,9 @@ $belo="without";
                      'sem_id' => $sem,
                      'sy_id' => $sys,
                      'with' => $value->$aelo,
-                     'without' => $value->$belo
+                     'without' => $value->$belo,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
                      
 
@@ -300,7 +314,9 @@ $eena="others";
                      'cs_subpro' => $value->$bena,
                      'testimonial' => $value->$cena,
                      'tesda' => $value->$dena,
-                     'others' => $value->$eena
+                     'others' => $value->$eena,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
                      
 
       
@@ -338,7 +354,9 @@ $ittt="phd";
                      'college_level' => $value->$fttt,
                      'college_grad' => $value->$gttt,
                      'masters' => $value->$httt,
-                     'phd' => $value->$ittt
+                     'phd' => $value->$ittt,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
       
                       
@@ -369,7 +387,9 @@ $ecv="annulled";
                      'married' => $value->$bcv,
                      'widowed' => $value->$ccv,
                      'separated' => $value->$dcv,
-                     'annulled' => $value->$ecv
+                     'annulled' => $value->$ecv,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
    
                       
                    ];
@@ -405,7 +425,9 @@ $iqwe="61above";
                      '46-50' => $value->$fqwe,
                      '51-55' => $value->$gqwe,
                      '56-60' => $value->$hqwe,
-                     '61-above' => $value->$iqwe
+                     '61-above' => $value->$iqwe,
+                      'created_at' =>  \Carbon\Carbon::now(), # \Datetime()
+                    'updated_at' => \Carbon\Carbon::now()
 
       
                       
@@ -440,8 +462,47 @@ $iqwe="61above";
                     \DB::table('admin_salarygrades')->insert($sal);
                     \DB::table('admin_servicegrps')->insert($sg);
                     \DB::table('admin_serviceyrs')->insert($sy);
+//currentdate
+          $cdate = \Carbon\Carbon::today();
+//getting id of report to provide values
+          $rep = DB::table('report_weights')->where('name','Administrative')->pluck('id');
+//duedate parse to carbon
+          $ddd=\Carbon\Carbon::parse($request->duedate);
+          //return deduction
+              $ded= DB::table('report_weights')->where('id',$rep)->value('deduction');
+          //return value of report/perfect points
+              $value= DB::table('report_weights')->where('id',$rep)->value('value');
+//diff function
+              $aa=$ddd->diffInDays($cdate);
+//return no of days per deduction
+              $day=DB::table('report_weights')->where('id',$rep)->value('dayofdeduction');
+//round
+              $count=round($aa/$day);
+//return value to be deduct
+              $tded = $count*$ded;
+              //timeliness
+              $tvalue = $value-$tded;
 
+              //DB::table('users')->whereId(Auth::user()->id)->increment('position');
+                                          
 
+              $adminid= DB::table('admin_empstatuses')->where('u_id',$u)
+                                            ->where('sem_id',$sem)
+                                            ->where('sy_id',$sys)->value('id');
+
+              //completeness(increment[will depend on how many times they will import or change the data they submitted])
+            // DB::table('admin_empstatuses')->whereId($adminid)->increment('c_point');
+              $unive=University::find($u);
+              $unive['c_point']= $unive['c_point']+1;
+             
+              $unive->save();
+  
+              $univ=AdminEmpstatus::find($adminid);
+              $univ['t_point'] = $tvalue;
+             
+              $univ->save();
+
+              
             
                 
                     dd('Insert Record successfully.');
@@ -450,15 +511,11 @@ $iqwe="61above";
                 {
                   dd('You dont fill all.');
                 }
+                dd('Check imported files.');
             }
-
-                else
-                {
-                  dd('You dont fill all.');
-                }
-
+              dd('Check imported files.');
         }
-        dd('Request data does not have any files to import.');      
+dd('Check imported files.');
     } 
   
 
@@ -466,24 +523,26 @@ $iqwe="61above";
 
    public function export(Request $r)
     {
-              $sem=DB::table('semesters')
+          
+          $sem=DB::table('semesters')
         ->where('status',1)
         ->value('id');
 
            $sys=DB::table('school_years')
         ->where('status',1)
         ->value('id');
+
       $id = Auth::id();
 
 
-		$u = DB::table('role_admins')
-			 		->where('role_id',2)
-			 		->where('admin_id',$id)
-			 		->value('u_id');
+    $u = DB::table('role_admins')
+          ->where('admin_id',$id)
+          ->value('u_id');
 
       $name=DB::table('universities')
           ->where('id',$u)
           ->value('code');
+ 
  
 
       $agegroup = array('25below','26to30','31to35',' 36to40','41to45','46to50','51to55','56to60','61above');
@@ -889,4 +948,5 @@ $iqwe="61above";
 
               })->export('xlsx');
             }
+
 }

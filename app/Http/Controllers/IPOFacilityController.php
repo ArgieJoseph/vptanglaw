@@ -13,6 +13,8 @@ use App\TEnrollment;
 use App\Semester;
 use App\SchoolYear;
 use App\FacultyAcadrankFt;
+use App\FacilityLandarea;
+use App\University;
 
 class IPOFacilityController extends Controller
 {
@@ -43,8 +45,9 @@ class IPOFacilityController extends Controller
          
         $branch= DB::table('universities')
             ->pluck('name','id');
+             $offered = DB::table('report_weights')->where('name','Facility')->get();
 
-          return view('pages.ipo_import_facility',compact('semester','sy','branch'),array('user'=> Auth::user()));
+          return view('pages.ipo_import_facility',compact('semester','sy','branch','offered'),array('user'=> Auth::user()));
     }
 
      public function exportFacility(Request $r)
@@ -605,7 +608,44 @@ class IPOFacilityController extends Controller
                     \DB::table('facility_rooms')->insert($r);
                     \DB::table('facility_landareas')->insert($land);
 
+//currentdate
+          $cdate = \Carbon\Carbon::today();
+//getting id of report to provide values
+          $rep = DB::table('report_weights')->where('name','Facility')->pluck('id');
+//duedate parse to carbon
+          $ddd=\Carbon\Carbon::parse($request->duedate);
+          //return deduction
+              $ded= DB::table('report_weights')->where('id',$rep)->value('deduction');
+          //return value of report/perfect points
+              $value= DB::table('report_weights')->where('id',$rep)->value('value');
+//diff function
+              $aa=$ddd->diffInDays($cdate);
+//return no of days per deduction
+              $day=DB::table('report_weights')->where('id',$rep)->value('dayofdeduction');
+//round
+              $count=round($aa/$day);
+//return value to be deduct
+              $tded = $count*$ded;
+              //timeliness
+              $tvalue = $value-$tded;
 
+              //DB::table('users')->whereId(Auth::user()->id)->increment('position');
+                                          
+
+              $adminid= DB::table('facility_landareas')->where('u_id',$u)
+                                            ->where('year',$y)->value('id');
+
+              //completeness(increment[will depend on how many times they will import or change the data they submitted])
+            // DB::table('admin_empstatuses')->whereId($adminid)->increment('c_point');
+              $unive=University::find($u);
+              $unive['c_point']= $unive['c_point']+1;
+             
+              $unive->save();
+  
+              $univ=FacilityLandarea::find($adminid);
+              $univ['t_point'] = $tvalue;
+             
+              $univ->save();
 
 
 

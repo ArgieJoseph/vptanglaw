@@ -24,6 +24,8 @@ class CreateAdminEmpstatusesTable extends Migration
             $table->integer('permanent_female')->default(0);
             $table->integer('pt_male')->default(0);
             $table->integer('pt_female')->default(0);
+            $table->integer('c_point')->default(0);
+            $table->float('t_point')->default(0);
             $table->timestamps();
         });
     }

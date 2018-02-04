@@ -26,6 +26,7 @@ class CreateTEnrollmentsTable extends Migration
                 $table->integer('4thfemale')->nullable();
                 $table->integer('5thmale')->nullable();
                 $table->integer('5thfemale')->nullable();
+                $table->float('t_point')->default(0);
             $table->timestamps();
         });
     }
